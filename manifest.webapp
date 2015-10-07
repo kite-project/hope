@@ -1,0 +1,7 @@
+{
+  "name": "Layer Cake",
+  "description": "Spatial model prototype",
+  "launch_path": "/index.html",
+  "orientation": "default",
+  "permissions": {}
+}

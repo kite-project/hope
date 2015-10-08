@@ -1,0 +1,91 @@
+#tabs {
+  position: relative;
+  top: 0;
+  left: 0;
+  height: 300%;
+}
+
+#notifications-reveal {
+  position: sticky;
+  top: 0;
+  width: 100%;
+}
+
+.grippy {
+  position: absolute;
+  width: 100%;
+  height: var(--actionbar-height);
+  pointer-events: auto;
+}
+
+.tab {
+  position: absolute;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  overflow: hidden;
+}
+
+.tab.current {
+  position: sticky;
+  top: var(--statusbar-height);
+}
+
+.tab .url {
+  flex: 0 var(--actionbar-height);
+
+  text-align: center;
+  line-height: var(--actionbar-height);
+
+  border-top: 1px black solid;
+  background: #efefef;
+
+  pointer-events: auto;
+}
+
+.tab .iframe {
+  flex: 1;
+  background: gray;
+}
+
+.tab .chrome {
+  display: flex;
+  flex: 0 var(--actionbar-height);
+
+  font-size: 30px;
+  font-weight: bold;
+  line-height: var(--actionbar-height);
+  text-align: center;
+  background: #efefef;
+
+  pointer-events: auto;
+}
+
+.chrome .navigation {
+  flex: 1;
+}
+
+.chrome .home {
+  flex: 2;
+}
+
+.chrome .menu {
+  flex: 1;
+}
+
+#new-tab {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: var(--actionbar-height);
+  padding-top: 1px;
+
+  color: white;
+  font-size: 30px;
+  text-align: center;
+  line-height: var(--actionbar-height);
+  background: black;
+}

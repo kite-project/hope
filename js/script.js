@@ -9,7 +9,7 @@ window.addEventListener('load', function() {
 
   // Setting up snapping
   var container = document.getElementById('tabs');
-  container.style.height = height * 3 + 'px';
+  container.style.height = height * 3 + 1 + 'px';
 
   var scrollable = document.getElementById('tabs-layer');
   scrollable.style.scrollSnapPointsY = 'repeat(' + height + 'px)';
@@ -29,7 +29,7 @@ window.addEventListener('load', function() {
   for (var i = 0; i < tabs.length; i++) {
     var tab = tabs[i];
     var shift = (i + 1) * acHeight + sbHeight;
-    tab.style.top = 2 * height  + shift + 'px';
+    tab.style.top = 2 * height + 1  + shift + 'px';
     tab.style.height = height - shift + 'px';
   }
 

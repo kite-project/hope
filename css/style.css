@@ -19,7 +19,20 @@ body {
   --actionbar-height: 50px;
 }
 
-/* Bottom Layer: notifications and functions */
+/* Re-usable */
+.container {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.styled-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Layers */
 #bottom-layer {
   position: absolute;
   top: 0;
@@ -27,28 +40,12 @@ body {
   display: flex;
   flex-direction: column;
 
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-
   background: #bcbcbc;
 }
 
-#statusbar {
-  flex: 0 var(--statusbar-height);
-  border-bottom: 1px black solid;
-
-  text-align: center;
-  line-height: var(--statusbar-height);
-  background: white;
-}
-
-/* Tabs Layer */
 #tabs-layer {
-  width: 100%;
-  height: 100%;
-
   padding-right: 20px;
+
   overflow-y: scroll;
   scroll-snap-type: mandatory;
   scroll-snap-destination: 0 0;

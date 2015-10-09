@@ -21,6 +21,7 @@ window.addEventListener('DOMContentLoaded', function() {
   content.forEach(function(c, i) {
     var tab = document.createElement('div');
 
+    tab.classList.add('container');
     tab.classList.add('tab');
     tab.classList.toggle('current', i === 0);
     tab.innerHTML = `

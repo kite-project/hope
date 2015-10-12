@@ -7,21 +7,8 @@ window.addEventListener('load', function() {
   var sbHeight = parseInt(bodyStyles.getPropertyValue('--statusbar-height'));
   var acHeight = parseInt(bodyStyles.getPropertyValue('--actionbar-height'));
 
-  // Setting up snapping
-  var container = document.getElementById('tabs');
-  container.style.height = height * 3 + 1 + 'px';
-
-  var scrollable = document.getElementById('tabs-layer');
-  scrollable.style.scrollSnapPointsY = 'repeat(' + height + 'px)';
-
-  // Setting up the notification reveal
-  var grippy = container.querySelector('.grippy');
-  grippy.style.top = height - acHeight + 'px';
-
-  var reveal = document.getElementById('notifications-reveal');
-  reveal.style.height = height + 'px';
-
   // Setting up the tabs
+  var container = document.getElementById('tabs-scrollable');
   var tabs = container.querySelectorAll('.tab:not(.current)');
   var current = container.querySelector('.tab.current');
   current.style.height = height - sbHeight + 'px';
@@ -29,11 +16,10 @@ window.addEventListener('load', function() {
   for (var i = 0; i < tabs.length; i++) {
     var tab = tabs[i];
     var shift = (i + 1) * acHeight + sbHeight;
-    tab.style.top = 2 * height + 1  + shift + 'px';
-    tab.style.height = height - shift + 'px';
+    tab.style.top = height + shift + 'px';
+    tab.style.height = Math.max(50, height - shift) + 'px';
   }
 
   // Displaying the current tab
   current.scrollIntoView(false);
-
 });

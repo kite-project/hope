@@ -1,21 +1,11 @@
 #tabs {
-  position: relative;
-  top: 0;
-  left: 0;
-  height: 300%;
-}
-
-#notifications-reveal {
-  position: sticky;
-  top: 0;
-  width: 100%;
-}
-
-.grippy {
   position: absolute;
-  width: 100%;
-  height: var(--actionbar-height);
-  pointer-events: auto;
+  top: 50%;
+  left: 0;
+
+  scroll-snap-type: mandatory;
+  scroll-snap-destination: 0 0;
+  scroll-snap-points-y: repeat(100%);
 }
 
 .tab {
@@ -28,6 +18,10 @@
 .tab.current {
   position: sticky;
   top: var(--statusbar-height);
+}
+
+.tab.next {
+  position: sticky;
 }
 
 .tab .url {

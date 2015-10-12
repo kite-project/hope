@@ -17,6 +17,7 @@ body {
 :root {
   --statusbar-height: 30px;
   --actionbar-height: 50px;
+  --scrollbar-width: 10px;
 }
 
 /* Re-usable */
@@ -32,6 +33,36 @@ body {
   margin: 0;
 }
 
+.no-scrollbar {
+  width: 100%;
+  padding-right: var(--scrollbar-width);
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.no-scrollbar > .scrollable {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(100% - var(--scrollbar-width));
+}
+
+.draggable {
+  pointer-events: auto;
+}
+
+.single-viewport {
+  height: 100%;
+}
+
+.double-viewport {
+  height: 200%;
+}
+
+.double-viewport > .single-viewport {
+  height: 50%;
+}
+
 /* Layers */
 #bottom-layer {
   position: absolute;
@@ -44,12 +75,20 @@ body {
 }
 
 #tabs-layer {
-  padding-right: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
 
-  overflow-y: scroll;
   scroll-snap-type: mandatory;
   scroll-snap-destination: 0 0;
+  scroll-snap-points-y: repeat(100%);
 
   pointer-events: none;
 }
 
+#grippy {
+  position: absolute;
+  top: calc(50% - var(--statusbar-height));
+  height: calc(var(--statusbar-height) * 2);
+  width: 100%;
+}

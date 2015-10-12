@@ -17,13 +17,14 @@ window.addEventListener('DOMContentLoaded', function() {
     }
   ];
 
-  var container = document.querySelector('#tabs');
+  var container = document.querySelector('#tabs-scrollable');
   content.forEach(function(c, i) {
     var tab = document.createElement('div');
 
     tab.classList.add('container');
     tab.classList.add('tab');
     tab.classList.toggle('current', i === 0);
+    tab.classList.toggle('next', i === 1);
     tab.innerHTML = `
       <div class="url">
         ${c.url}

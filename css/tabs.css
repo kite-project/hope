@@ -4,27 +4,40 @@
   left: 0;
 
   scroll-snap-type: mandatory;
-  scroll-snap-destination: 0 0;
+  scroll-snap-destination: 50% 0px;
   scroll-snap-points-y: repeat(100%);
 }
 
 .tab {
   position: absolute;
   left: 0;
+}
+
+.tab .frame {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
   display: flex;
   flex-direction: column;
 }
 
 .tab.current {
+  overflow: visible;
+}
+
+.tab.current .frame {
   position: sticky;
   top: var(--statusbar-height);
 }
 
-.tab.next {
-  position: sticky;
+.tab:not(.current) {
+  scroll-snap-coordinate: 50% 0;
 }
 
-.tab .url {
+.frame .url {
   flex: 0 var(--actionbar-height);
 
   text-align: center;
@@ -36,12 +49,12 @@
   pointer-events: auto;
 }
 
-.tab .iframe {
+.frame .iframe {
   flex: 1;
   background: gray;
 }
 
-.tab .chrome {
+.frame .chrome {
   display: flex;
   flex: 0 var(--actionbar-height);
 

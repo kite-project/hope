@@ -9,9 +9,16 @@ window.addEventListener('load', function() {
 
   // Setting up the tabs
   var container = document.getElementById('tabs-scrollable');
-  var tabs = container.querySelectorAll('.tab:not(.current)');
+
   var current = container.querySelector('.tab.current');
-  current.style.height = height - sbHeight + 'px';
+  current.style.top = 0;
+  current.style.height = height * 2 + 'px';
+  current.querySelector('.frame').style.height = height - sbHeight + 'px';
+
+  var tabs = container.querySelectorAll('.tab:not(.current)');
+  container.style.height = Math.max(height * 2,
+                                    height + sbHeight +
+                                      (tabs.length + 2) * acHeight) + 'px';
 
   for (var i = 0; i < tabs.length; i++) {
     var tab = tabs[i];
@@ -21,5 +28,5 @@ window.addEventListener('load', function() {
   }
 
   // Displaying the current tab
-  current.scrollIntoView(false);
+  current.scrollIntoView(true);
 });

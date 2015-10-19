@@ -24,28 +24,3 @@
 #notifications li > * {
   margin: 4px;
 }
-
-#functions {
-  flex: 0 var(--actionbar-height);
-  border-top: 1px black solid;
-  background: gray;
-}
-
-#functions ul {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-#functions li {
-  flex: 1;
-  height: 100%;
-  text-align: center;
-
-  line-height: var(--actionbar-height);
-  border-left: 1px black solid;
-}
-
-#functions li:first-child {
-  border-left: 0;
-}

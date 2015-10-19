@@ -42,25 +42,10 @@ window.addEventListener('DOMContentLoaded', function() {
           ${c.url}
         </div>
         <div class="iframe"></div>
-        <div class="chrome">
-          <div class="navigation">
-            &lt;
-          </div>
-          <div class="home">
-            ⌂
-          </div>
-          <div class="menu">
-            ▤
-          </div>
-        </div>
+        <div class="home-filler"></div>
       </div>
     `;
 
     container.appendChild(tab);
   });
-
-  var newTab = document.createElement('div');
-  newTab.id = 'new-tab';
-  newTab.textContent = '+';
-  container.appendChild(newTab);
 });

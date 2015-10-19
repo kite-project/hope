@@ -47,7 +47,12 @@ body {
   width: calc(100% - var(--scrollbar-width));
 }
 
-.draggable {
+.grippy {
+  position: absolute;
+  top: calc(50% - var(--statusbar-height));
+  height: calc(var(--statusbar-height) * 2);
+  width: 100%;
+
   pointer-events: auto;
 }
 
@@ -61,6 +66,12 @@ body {
 
 .double-viewport > .single-viewport {
   height: 50%;
+}
+
+.home-filler {
+  flex: 0 var(--actionbar-height);
+  background: none;
+  pointer-events: none;
 }
 
 /* Layers */
@@ -84,11 +95,4 @@ body {
   scroll-snap-points-y: repeat(100%);
 
   pointer-events: none;
-}
-
-#grippy {
-  position: absolute;
-  top: calc(50% - var(--statusbar-height));
-  height: calc(var(--statusbar-height) * 2);
-  width: 100%;
 }

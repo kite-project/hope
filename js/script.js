@@ -9,6 +9,8 @@ window.addEventListener('load', function() {
 
   // Setting up the tabs
   var container = document.getElementById('tabs-scrollable');
+  var grippy = container.querySelector('.grippy');
+  grippy.style.top = height - acHeight + 'px';
 
   var current = container.querySelector('.tab.current');
   current.style.top = 0;

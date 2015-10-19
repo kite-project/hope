@@ -1,0 +1,25 @@
+#home-zone {
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: var(--actionbar-height);
+
+  background: black;
+  z-index: 1000;
+
+  color: white;
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+}
+
+#home-zone .info {
+  flex: 1;
+}
+#home-zone .home {
+  flex: 2;
+}
+#home-zone .menu {
+  flex: 1;
+}

@@ -24,12 +24,16 @@ window.addEventListener('DOMContentLoaded', function() {
   function showAdd() {
     if (showing) return;
     showing = true;
-    menu.classList.add('show-add');
+    scheduler.feedback(function() {
+      menu.classList.add('show-add');
+    }, menu, 'animationend')
   }
 
   function hideAdd() {
     if (!showing) return;
     showing = false;
-    menu.classList.remove('show-add');
+    scheduler.feedback(function() {
+      menu.classList.remove('show-add');
+    }, menu, 'animationend')
   }
 });

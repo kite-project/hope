@@ -62,14 +62,14 @@
   }
   to {
     opacity: 1;
-    transform: rotate(-360deg);
+    transform: rotate(-180deg);
   }
 }
 
 @keyframes hide-add {
   from {
     opacity: 1;
-    transform: rotate(-360deg);
+    transform: rotate(-180deg);
   }
   to {
     opacity: 0;
@@ -84,14 +84,14 @@
   }
   to {
     opacity: 0;
-    transform: rotate(-360deg);
+    transform: rotate(-180deg);
   }
 }
 
 @keyframes show-more {
   from {
     opacity: 0;
-    transform: rotate(-360deg);
+    transform: rotate(-180deg);
   }
   to {
     opacity: 1;

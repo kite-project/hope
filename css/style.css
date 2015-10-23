@@ -17,7 +17,7 @@ body {
 :root {
   --statusbar-height: 30px;
   --actionbar-height: 50px;
-  --scrollbar-width: 10px;
+  --scrollbar-width: 20px;
 }
 
 /* Re-usable */

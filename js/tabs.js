@@ -34,11 +34,10 @@ window.addEventListener('DOMContentLoaded', function() {
     tab.classList.add('container');
     tab.classList.add('tab');
 
-    tab.classList.toggle('current', i === 0);
-
     tab.innerHTML = `
       <div class="frame">
         <div class="url">
+          <a class="close">×</a>
           ${c.url}
         </div>
         <div class="iframe"></div>
@@ -48,4 +47,62 @@ window.addEventListener('DOMContentLoaded', function() {
 
     container.appendChild(tab);
   });
+
+
+  var closing = false
+  container.addEventListener('click', function(evt) {
+    if (!evt.target.classList.contains('close')) {
+      return;
+    }
+
+    if (closing) {
+      return;
+    }
+    closing = true;
+
+    var tab = evt.target.closest('.tab');
+    var motions = [];
+
+    motions.push(scheduler.transition(function() {
+      tab.classList.add('will-close');
+    }, tab, 'animationend'));
+
+    var next = tab.nextSibling;
+    while (next && next.classList.contains('tab')) {
+
+      motions.push(scheduler.transition(function() {
+        next.classList.add('move-up')
+      }, next, 'animationend'));
+
+      next = next.nextSibling;
+    }
+
+
+    Promise.all(motions).then(function() {
+      return scheduler.mutation(function() {
+        tab.remove();
+        window.placeTabs();
+      });
+    }).then(function() {
+      closing = false;
+    });
+  });
+});
+
+window.addEventListener('entering-tabs-view', function() {
+  var current = document.querySelector('.tab.current');
+  if (!current) return;
+
+  scheduler.feedback(function() {
+    current.classList.add('in-tabs-view');
+  }, current, 'transitionend');
+});
+
+window.addEventListener('leaving-tabs-view', function() {
+  var current = document.querySelector('.tab.current');
+  if (!current) return;
+
+  scheduler.feedback(function() {
+    current.classList.remove('in-tabs-view');
+  }, current, 'transitionend');
 });

@@ -8,9 +8,28 @@
   scroll-snap-points-y: repeat(100%);
 }
 
+#tabs-background {
+  position: absolute;
+  top: calc(50% + var(--statusbar-height));
+  left: 0;
+  width: 100%;
+  height: calc(50% - var(--statusbar-height));
+
+  background: gray;
+}
+
 .tab {
   position: absolute;
   left: 0;
+
+  animation-duration:  0.3s;
+  animation-timing-function: ease-in;
+  animation-fill-mode: both;
+}
+
+/* Prevents a reflow but screws up position:sticky, so skipping for .current */
+.tab:not(.current) {
+  transform: translate(0, 0);
 }
 
 .tab .frame {
@@ -26,6 +45,14 @@
 
 .tab.current {
   overflow: visible;
+}
+
+.tab.current .close {
+  opacity: 0;
+}
+
+.tab.current.in-tabs-view .close {
+  opacity: 1;
 }
 
 .tab.current .frame {
@@ -49,7 +76,48 @@
   pointer-events: auto;
 }
 
+.url .close {
+  position: absolute;
+  top: 0;
+  right: 10px;
+  width: var(--actionbar-height);
+  height: var(--actionbar-height);
+
+  font-weight: bold;
+  font-size: 32px;
+  line-height: var(--actionbar-height);
+  text-align: right;
+
+  transition: opacity 0.3s linear;
+}
+
 .frame .iframe {
   flex: 1;
   background: gray;
+}
+
+.tab.will-close {
+  animation-name: will-close;
+}
+
+.tab.move-up {
+  animation-name: move-up;
+}
+
+@keyframes will-close {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes move-up {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(calc(var(--actionbar-height) * -1));
+  }
 }

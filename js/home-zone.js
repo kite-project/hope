@@ -12,5 +12,12 @@ window.addEventListener('DOMContentLoaded', function() {
       menu.classList.remove('show-add');
     }, menu, 'animationend');
   });
+
+  menu.addEventListener('click', function(evt) {
+    if (evt.target.classList.contains('add')) {
+      window.dispatchEvent(new CustomEvent('open-new-tab'));
+      return;
+    }
+  });
 });
 

@@ -22,6 +22,8 @@ window.addEventListener('load', function() {
       current.classList.add('in-tabs-view');
     }
     current.classList.remove('move-up');
+    current.classList.remove('move-down');
+    current.classList.remove('will-open');
     current.style.top = 0;
     current.style.height = height * 2 + 'px';
     current.querySelector('.frame').style.height = height - sbHeight + 'px';
@@ -37,9 +39,13 @@ window.addEventListener('load', function() {
       var tab = tabs[i];
       var shift = (i + 1) * acHeight + sbHeight;
       tab.style.top = height + shift + 'px';
-      tab.style.height = Math.max(50, height - shift) + 'px';
+      tab.style.height = Math.max(acHeight, height - shift) + 'px';
 
+      tab.classList.remove('current');
       tab.classList.remove('move-up');
+      tab.classList.remove('move-down');
+      tab.classList.remove('will-open');
+      tab.classList.remove('in-tabs-view');
     }
   };
 

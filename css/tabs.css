@@ -86,12 +86,16 @@
   line-height: var(--actionbar-height);
   text-align: right;
 
-  transition: opacity 0.3s linear;
+  transition: opacity 0.3s ease-in;
 }
 
 .frame .iframe {
   flex: 1;
   background: gray;
+}
+
+.tab.will-open {
+  animation-name: will-open;
 }
 
 .tab.will-close {
@@ -100,6 +104,10 @@
 
 .tab.move-up {
   animation-name: move-up;
+}
+
+.tab.move-down {
+  animation-name: move-down;
 }
 
 @keyframes will-close {
@@ -111,11 +119,29 @@
   }
 }
 
+@keyframes will-open {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 @keyframes move-up {
   from {
     transform: translateY(0);
   }
   to {
     transform: translateY(calc(var(--actionbar-height) * -1));
+  }
+}
+
+@keyframes move-down {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(var(--actionbar-height));
   }
 }

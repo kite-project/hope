@@ -26,7 +26,7 @@
   position: relative;
 }
 
-.menu span {
+.menu a {
   position: absolute;
   width: 50px;
   left: calc(50% - 25px);
@@ -35,6 +35,8 @@
   animation-duration:  0.3s;
   animation-timing-function: ease-in;
   animation-fill-mode: both;
+
+  pointer-events: auto;
 }
 
 .menu .more {

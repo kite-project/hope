@@ -12,6 +12,9 @@ window.addEventListener('load', function() {
   var grippy = container.querySelector('.grippy');
   grippy.style.top = height - acHeight + 'px';
 
+  var background = document.getElementById('tabs-background');
+  background.style.top = height + sbHeight + 'px';
+
   window.placeTabs = function() {
     var current = container.querySelector('.tab');
     current.classList.add('current');
@@ -27,6 +30,8 @@ window.addEventListener('load', function() {
     container.style.height = Math.max(height * 2,
                                       height + sbHeight +
                                         (tabs.length + 2) * acHeight) + 'px';
+    background.style.height = parseInt(container.style.height) -
+                              height - sbHeight + 'px';
 
     for (var i = 0; i < tabs.length; i++) {
       var tab = tabs[i];

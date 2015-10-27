@@ -10,10 +10,8 @@
 
 #tabs-background {
   position: absolute;
-  top: calc(50% + var(--statusbar-height));
   left: 0;
   width: 100%;
-  height: calc(50% - var(--statusbar-height));
 
   background: gray;
 }

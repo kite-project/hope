@@ -56,14 +56,15 @@ window.addEventListener('DOMContentLoaded', function() {
   var lastScrollTop;
   scheduler.attachDirect(tabs, 'scroll', function() {
     var newScrollTop = tabs.scrollTop;
+    var height = window.innerHeight;
 
     if ((newScrollTop > lastScrollTop) &&
-        (newScrollTop >= (tabs.scrollTopMax - 250))) {
+        (newScrollTop >= height / 2)) {
       enterTabs();
     }
 
     if ((newScrollTop < lastScrollTop) &&
-        (newScrollTop <= (tabs.scrollTopMax - 200))) {
+        (newScrollTop <= height / 4)) {
       leaveTabs();
     }
 

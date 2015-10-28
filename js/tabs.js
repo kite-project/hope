@@ -81,9 +81,9 @@ window.addEventListener('DOMContentLoaded', function() {
     var next = tab.nextSibling;
     while (next && next.classList.contains('tab')) {
 
-      motions.push(scheduler.transition(function() {
+      motions.push(scheduler.transition(function(next) {
         next.classList.add('move-up')
-      }, next, 'animationend'));
+      }.bind(null, next), next, 'animationend'));
 
       next = next.nextSibling;
     }

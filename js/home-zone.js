@@ -1,5 +1,8 @@
 window.addEventListener('DOMContentLoaded', function() {
-  var menu = document.querySelector('#home-zone .menu');
+  var homeZone = document.getElementById('home-zone');
+  var menu = homeZone.querySelector('.menu');
+  var tabsLayer = document.getElementById('tabs-layer');
+  var tabs = document.getElementById('tabs');
 
   window.addEventListener('entering-tabs-view', function() {
     scheduler.feedback(function() {
@@ -13,9 +16,23 @@ window.addEventListener('DOMContentLoaded', function() {
     }, menu, 'animationend');
   });
 
-  menu.addEventListener('click', function(evt) {
+  homeZone.addEventListener('click', function(evt) {
     if (evt.target.classList.contains('add')) {
-      window.dispatchEvent(new CustomEvent('open-new-tab'));
+      if (window.inTabsView) {
+        window.dispatchEvent(new CustomEvent('open-new-tab'));
+      }
+      return;
+    }
+
+    if (evt.target.classList.contains('go-home')) {
+      tabsLayer.scrollTo({
+        top: window.innerHeight,
+        behavior: 'smooth'
+      });
+      tabs.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
       return;
     }
   });

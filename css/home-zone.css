@@ -26,6 +26,10 @@
   position: relative;
 }
 
+#home-zone a {
+  pointer-events: auto;
+}
+
 .menu a {
   position: absolute;
   width: 50px;
@@ -35,8 +39,6 @@
   animation-duration:  0.3s;
   animation-timing-function: ease-in;
   animation-fill-mode: both;
-
-  pointer-events: auto;
 }
 
 .menu .more {

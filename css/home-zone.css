@@ -3,16 +3,16 @@
   position: fixed;
   bottom: 0;
   width: 100%;
-  height: var(--actionbar-height);
+  height: 72px;
 
-  background: black;
+  background: #333333;
   z-index: 1000;
 
-  color: white;
-  font-size: 34px;
-  font-weight: bold;
   text-align: center;
-  line-height: var(--actionbar-height);
+}
+
+#home-zone * {
+  -moz-user-select: none;
 }
 
 #home-zone .info {
@@ -28,12 +28,35 @@
 
 #home-zone a {
   pointer-events: auto;
+  display: inline-block;
+  padding: 20px;
+}
+
+#home-zone img {
+  padding: 0;
+  pointer-events: none;
+}
+
+.home img {
+  margin: 0;
+  height: 32px;
+}
+
+.more img {
+  margin: 2px 11px;
+  height: 24px;
+}
+
+.add img {
+  margin: 2px;
+  width: 24px;
+  height: 24px;
 }
 
 .menu a {
   position: absolute;
-  width: 50px;
-  left: calc(50% - 25px);
+  padding: 0;
+  right: 0;
   transform: rotate(0deg);
 
   animation-duration:  0.3s;

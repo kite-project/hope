@@ -3,7 +3,7 @@
   position: fixed;
   bottom: 0;
   width: 100%;
-  height: 72px;
+  height: var(--homebar-height);
 
   background: #333333;
   z-index: 1000;

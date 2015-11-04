@@ -1,13 +1,5 @@
-#statusbar {
-  flex: 0 var(--statusbar-height);
-  border-bottom: 1px black solid;
-
-  text-align: center;
-  line-height: var(--statusbar-height);
-  background: white;
-}
-
 #notifications {
+  margin-top: var(--statusbar-height);
   flex: 1;
   overflow-y: scroll;
 }

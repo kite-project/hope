@@ -4,7 +4,7 @@
   left: 0;
 
   scroll-snap-type: mandatory;
-  scroll-snap-destination: 50% 0px;
+  scroll-snap-destination: 50% 0;
   scroll-snap-points-y: repeat(100%);
 }
 
@@ -20,7 +20,7 @@
   position: absolute;
   left: 0;
 
-  animation-duration:  0.3s;
+  animation-duration:  0.2s;
   animation-timing-function: ease-in;
   animation-fill-mode: both;
 }
@@ -59,7 +59,7 @@
 }
 
 .tab:not(.current) {
-  scroll-snap-coordinate: 50% 0;
+  scroll-snap-coordinate: 50% calc(var(--statusbar-height) * -1);
 }
 
 .frame .url {
@@ -86,7 +86,7 @@
   line-height: var(--actionbar-height);
   text-align: right;
 
-  transition: opacity 0.3s ease-in;
+  transition: opacity 0.2s ease-in;
 }
 
 .frame .iframe {
@@ -108,6 +108,10 @@
 
 .tab.move-down {
   animation-name: move-down;
+}
+
+.tab.hide-down {
+  animation-name: hide-down;
 }
 
 @keyframes will-close {
@@ -143,5 +147,14 @@
   }
   to {
     transform: translateY(var(--actionbar-height));
+  }
+}
+
+@keyframes hide-down {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(var(--height));
   }
 }

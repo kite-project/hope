@@ -14,9 +14,26 @@ body {
   transform: scale(0.88);
 }
 
+#statusbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  flex: 0 var(--statusbar-height);
+  border-bottom: 1px black solid;
+
+  text-align: center;
+  line-height: var(--statusbar-height);
+  background: white;
+
+  z-index: 1000;
+}
+
 :root {
   --statusbar-height: 30px;
   --actionbar-height: 50px;
+  --homebar-height: 72px;
   --scrollbar-width: 20px;
 }
 
@@ -69,7 +86,7 @@ body {
 }
 
 .home-filler {
-  flex: 0 var(--actionbar-height);
+  flex: 0 var(--homebar-height);
   background: none;
   pointer-events: none;
 }

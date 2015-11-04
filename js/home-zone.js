@@ -3,6 +3,7 @@ window.addEventListener('DOMContentLoaded', function() {
   var menu = homeZone.querySelector('.menu');
   var tabsLayer = document.getElementById('tabs-layer');
   var tabs = document.getElementById('tabs');
+  var height = window.innerHeight;
 
   window.addEventListener('entering-tabs-view', function() {
     scheduler.feedback(function() {
@@ -25,16 +26,20 @@ window.addEventListener('DOMContentLoaded', function() {
     }
 
     if (evt.target.classList.contains('go-home')) {
-      tabsLayer.scrollTo({
-        top: window.innerHeight,
-        behavior: 'smooth'
-      });
-      tabs.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
+      window.goHome();
       return;
     }
   });
+
+  window.goHome = function(instant) {
+    tabsLayer.scrollTo({
+      top: height,
+      behavior: instant ? 'auto' : 'smooth'
+    });
+    tabs.scrollTo({
+      top: 0,
+      behavior: instant ? 'auto' : 'smooth'
+    });
+  };
 });
 

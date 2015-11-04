@@ -2,10 +2,12 @@ window.addEventListener('load', function() {
 
   // Geometry
   var height = window.innerHeight;
+  document.body.style.setProperty('--height', height + 'px');
 
   var bodyStyles = window.getComputedStyle(document.body);
   var sbHeight = parseInt(bodyStyles.getPropertyValue('--statusbar-height'));
   var acHeight = parseInt(bodyStyles.getPropertyValue('--actionbar-height'));
+  var hbHeight = parseInt(bodyStyles.getPropertyValue('--homebar-height'));
 
   // Setting up the tabs
   var container = document.getElementById('tabs-scrollable');
@@ -15,44 +17,51 @@ window.addEventListener('load', function() {
   var background = document.getElementById('tabs-background');
   background.style.top = height + sbHeight + 'px';
 
+  var cleanUp = function(tab) {
+    tab.classList.remove('current');
+    tab.classList.remove('move-up');
+    tab.classList.remove('move-down');
+    tab.classList.remove('hide-up');
+    tab.classList.remove('hide-down');
+    tab.classList.remove('will-open');
+    tab.classList.remove('will-select');
+    tab.classList.remove('in-tabs-view');
+  }
+
   window.placeTabs = function() {
-    var current = container.querySelector('.tab');
+    var current = window.domTabs[0];
+    cleanUp(current);
     current.classList.add('current');
     if (window.inTabsView) {
       current.classList.add('in-tabs-view');
     }
-    current.classList.remove('move-up');
-    current.classList.remove('move-down');
-    current.classList.remove('will-open');
+    current.style.zIndex = 1;
     current.style.top = 0;
     current.style.height = height * 2 + 'px';
     current.querySelector('.frame').style.height = height - sbHeight + 'px';
 
-    var tabs = container.querySelectorAll('.tab:not(.current)');
+    var tabs = window.domTabs.slice(1);
     container.style.height = Math.max(height * 2,
-                                      height + sbHeight +
-                                        (tabs.length + 2) * acHeight) + 'px';
+                                      height + hbHeight + sbHeight +
+                                        (tabs.length + 1) * acHeight) + 'px';
     background.style.height = parseInt(container.style.height) -
                               height - sbHeight + 'px';
 
     for (var i = 0; i < tabs.length; i++) {
       var tab = tabs[i];
       var shift = (i + 1) * acHeight + sbHeight;
+      tab.style.zIndex = i + 2;
       tab.style.top = height + shift + 'px';
       tab.style.height = Math.max(acHeight, height - shift) + 'px';
 
-      tab.classList.remove('current');
-      tab.classList.remove('move-up');
-      tab.classList.remove('move-down');
-      tab.classList.remove('will-open');
-      tab.classList.remove('in-tabs-view');
+      cleanUp(tab);
     }
   };
 
   window.placeTabs();
 
   // Displaying the current tab
-  var current = container.querySelector('.tab.current');
+  var current = window.domTabs[0];
   current.scrollIntoView(true);
 });
 

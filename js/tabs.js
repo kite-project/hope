@@ -58,6 +58,10 @@ window.addEventListener('DOMContentLoaded', function() {
   }
 
   container.addEventListener('click', function(evt) {
+    if (!window.inTabsView) {
+      return;
+    }
+
     if (evt.target.classList.contains('close')) {
       close(evt);
       return;

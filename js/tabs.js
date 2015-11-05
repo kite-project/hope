@@ -103,7 +103,7 @@ window.addEventListener('DOMContentLoaded', function() {
       return scheduler.mutation(function() {
         tab.remove();
         window.domTabs.splice(tabIndex, 1);
-        window.placeTabs();
+        return window.placeTabs();
       });
     }).then(function() {
       closing = false;
@@ -148,7 +148,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
       Promise.all(motions).then(function() {
         return scheduler.mutation(function() {
-          window.placeTabs();
+          return window.placeTabs();
         });
       }).then(function() {
         window.goHome();
@@ -216,8 +216,8 @@ window.addEventListener('DOMContentLoaded', function() {
           });
           window.domTabs.splice(tabIndex, 1);
           window.domTabs.unshift(tab);
-          window.placeTabs();
           window.goHome(true);
+          return window.placeTabs();
         });
       }).then(function() {
         selecting = false;

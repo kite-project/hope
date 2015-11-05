@@ -11,6 +11,7 @@ window.addEventListener('load', function() {
 
   // Setting up the tabs
   var container = document.getElementById('tabs-scrollable');
+  var tabsContainer = document.getElementById('tabs');
   var grippy = container.querySelector('.grippy');
   grippy.style.top = height - acHeight + 'px';
 
@@ -29,33 +30,51 @@ window.addEventListener('load', function() {
   }
 
   window.placeTabs = function() {
-    var current = window.domTabs[0];
-    cleanUp(current);
-    current.classList.add('current');
-    if (window.inTabsView) {
-      current.classList.add('in-tabs-view');
-    }
-    current.style.zIndex = 1;
-    current.style.top = 0;
-    current.style.height = height * 2 + 'px';
-    current.querySelector('.frame').style.height = height - sbHeight + 'px';
+    return new Promise(function(resolve) {
+      var current = window.domTabs[0];
+      cleanUp(current);
+      current.classList.add('current');
+      if (window.inTabsView) {
+        current.classList.add('in-tabs-view');
+      }
+      current.style.zIndex = 1;
+      current.style.top = 0;
+      current.style.height = height * 2 + 'px';
+      current.querySelector('.frame').style.height = height - sbHeight + 'px';
 
-    var tabs = window.domTabs.slice(1);
-    container.style.height = Math.max(height * 2,
-                                      height + hbHeight + sbHeight +
-                                        (tabs.length + 1) * acHeight) + 'px';
-    background.style.height = parseInt(container.style.height) -
-                              height - sbHeight + 'px';
+      var tabs = window.domTabs.slice(1);
+      for (var i = 0; i < tabs.length; i++) {
+        var tab = tabs[i];
+        var shift = (i + 1) * acHeight + sbHeight;
+        tab.style.zIndex = i + 2;
+        tab.style.top = height + shift + 'px';
+        tab.style.height = Math.max(acHeight, height - shift) + 'px';
 
-    for (var i = 0; i < tabs.length; i++) {
-      var tab = tabs[i];
-      var shift = (i + 1) * acHeight + sbHeight;
-      tab.style.zIndex = i + 2;
-      tab.style.top = height + shift + 'px';
-      tab.style.height = Math.max(acHeight, height - shift) + 'px';
+        cleanUp(tab);
+      }
 
-      cleanUp(tab);
-    }
+      var newHeight = container.style.height = Math.max(height * 2,
+                                        height + hbHeight + sbHeight +
+                                          (tabs.length + 1) * acHeight);
+
+      var updateContainer = function() {
+        container.style.height = newHeight + 'px';
+        background.style.height = parseInt(container.style.height) -
+                                  height - sbHeight + 'px';
+        resolve();
+      };
+
+      var scrollTop = tabsContainer.scrollTop;
+      if ((scrollTop + height) > newHeight) {
+        tabsContainer.scrollTo({
+          top: scrollTop - acHeight,
+          behavior: 'smooth'
+        });
+        setTimeout(updateContainer, 300);
+      } else {
+        updateContainer();
+      }
+    });
   };
 
   window.placeTabs();

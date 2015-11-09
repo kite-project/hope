@@ -8,6 +8,9 @@ window.addEventListener('load', function() {
   var sbHeight = parseInt(bodyStyles.getPropertyValue('--statusbar-height'));
   var acHeight = parseInt(bodyStyles.getPropertyValue('--actionbar-height'));
   var hbHeight = parseInt(bodyStyles.getPropertyValue('--homebar-height'));
+  var previewHeight = parseInt(bodyStyles.getPropertyValue('--preview-height'));
+  var gutterHeight = parseInt(bodyStyles.getPropertyValue('--tab-gutter-height'));
+  var snapHeight = height - previewHeight - acHeight - hbHeight;
 
   // Setting up the tabs
   var container = document.getElementById('tabs-scrollable');
@@ -16,7 +19,7 @@ window.addEventListener('load', function() {
   grippy.style.top = height - acHeight + 'px';
 
   var background = document.getElementById('tabs-background');
-  background.style.top = height + sbHeight + 'px';
+  background.style.top = snapHeight + 'px';
 
   var cleanUp = function(tab) {
     tab.classList.remove('current');
@@ -39,35 +42,35 @@ window.addEventListener('load', function() {
       }
       current.style.zIndex = 1;
       current.style.top = 0;
-      current.style.height = height * 2 + 'px';
+      current.style.height = height * 2 - acHeight - previewHeight - hbHeight + 'px';
       current.querySelector('.frame').style.height = height - sbHeight + 'px';
 
       var tabs = window.domTabs.slice(1);
       for (var i = 0; i < tabs.length; i++) {
         var tab = tabs[i];
-        var shift = (i + 1) * acHeight + sbHeight;
+        var shift = i * (acHeight + previewHeight + gutterHeight) + sbHeight - hbHeight;
         tab.style.zIndex = i + 2;
         tab.style.top = height + shift + 'px';
-        tab.style.height = Math.max(acHeight, height - shift) + 'px';
+        tab.style.height = Math.max(acHeight + previewHeight + gutterHeight, height - shift) + 'px';
 
         cleanUp(tab);
       }
 
-      var newHeight = container.style.height = Math.max(height * 2,
-                                        height + hbHeight + sbHeight +
-                                          (tabs.length + 1) * acHeight);
+      var newHeight = container.style.height = Math.max(snapHeight * 2,
+                                        height + hbHeight +
+                                          tabs.length * (acHeight + previewHeight));
 
       var updateContainer = function() {
         container.style.height = newHeight + 'px';
         background.style.height = parseInt(container.style.height) -
-                                  height - sbHeight + 'px';
+                                  snapHeight + 'px';
         resolve();
       };
 
       var scrollTop = tabsContainer.scrollTop;
       if ((scrollTop + height) > newHeight) {
         tabsContainer.scrollTo({
-          top: scrollTop - acHeight,
+          top: scrollTop - (acHeight + previewHeight + gutterHeight),
           behavior: 'smooth'
         });
         setTimeout(updateContainer, 300);
@@ -82,6 +85,15 @@ window.addEventListener('load', function() {
   // Displaying the current tab
   var current = window.domTabs[0];
   current.scrollIntoView(true);
+
+
+
+  var sbTitle = document.querySelector('#statusbar span')
+  window.addEventListener('selected-tab', function(evt) {
+    scheduler.mutation(function() {
+      sbTitle.textContent = evt.detail.title;
+    });
+  });
 });
 
 window.addEventListener('DOMContentLoaded', function() {

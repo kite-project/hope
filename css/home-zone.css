@@ -32,6 +32,10 @@
   padding: 20px;
 }
 
+#home-zone .home a {
+  padding-bottom: 0;
+}
+
 #home-zone img {
   padding: 0;
   pointer-events: none;

@@ -1,25 +1,24 @@
 window.addEventListener('DOMContentLoaded', function() {
   var content = [
     {
-      url: 'about:home'
+      title: 'Home',
+      url: 'homescreen.gaiamobile.org'
     },
     {
-      url: 'twitter.com'
+      title: 'Square Space',
+      url: 'squarespace.com'
     },
     {
-      url: 'mozilla.org'
+      title: 'Mash Creative',
+      url: 'mashcreative.com'
     },
     {
-      url: 'sgz.fr'
+      title: 'Vine',
+      url: 'vine.com'
     },
     {
+      title: 'The Verge',
       url: 'theverge.com'
-    },
-    {
-      url: 'new.ycombinator.com'
-    },
-    {
-      url: 'google.com'
     }
   ];
 
@@ -28,16 +27,20 @@ window.addEventListener('DOMContentLoaded', function() {
   var bodyStyles = window.getComputedStyle(document.body);
   var sbHeight = parseInt(bodyStyles.getPropertyValue('--statusbar-height'));
   var acHeight = parseInt(bodyStyles.getPropertyValue('--actionbar-height'));
+  var previewHeight = parseInt(bodyStyles.getPropertyValue('--preview-height'));
+  var hbHeight = parseInt(bodyStyles.getPropertyValue('--homebar-height'));
+  var gutterHeight = parseInt(bodyStyles.getPropertyValue('--tab-gutter-height'));
+  var snapHeight = window.innerHeight - previewHeight - acHeight - hbHeight;
 
   var tabs = document.getElementById('tabs');
   var container = document.querySelector('#tabs-scrollable');
   content.forEach(function(c, i) {
-    var tab = makeTab(c.url);
+    var tab = makeTab(c);
     container.appendChild(tab);
     window.domTabs.push(tab);
   });
 
-  function makeTab(url) {
+  function makeTab(data) {
     var tab = document.createElement('div');
 
     tab.classList.add('container');
@@ -46,15 +49,30 @@ window.addEventListener('DOMContentLoaded', function() {
     tab.innerHTML = `
       <div class="frame">
         <div class="url">
-          <a class="close">×</a>
-          ${url}
+          <a class="close"><img src="assets/Close_tab.png" /></a>
+          <span class="title">
+            ${data.title}
+          </span>
+          <span class="urlfield">
+            ${data.url}
+          </span>
         </div>
-        <div class="iframe"></div>
+          <div class="iframe">
+            <img src="assets/${data.url}.png" />
+          </div>
         <div class="home-filler"></div>
       </div>
     `;
 
     return tab;
+  }
+
+  function publishTabSelected(tab) {
+    window.dispatchEvent(new CustomEvent('selected-tab', {
+      detail: {
+        title: tab.querySelector('.title').textContent
+      }
+    }));
   }
 
   container.addEventListener('click', function(evt) {
@@ -110,6 +128,20 @@ window.addEventListener('DOMContentLoaded', function() {
     });
   }
 
+  function showFirstTab() {
+    return new Promise(function(resolve) {
+      if (tabs.scrollTop > snapHeight) {
+        tabs.scrollTo({
+          top: snapHeight,
+          behavior: 'smooth'
+        });
+        setTimeout(resolve, 200);
+      } else {
+        resolve();
+      }
+    });
+  }
+
   var opening = false
   function open() {
     if (opening) {
@@ -118,45 +150,51 @@ window.addEventListener('DOMContentLoaded', function() {
     opening = true;
 
 
-    var tab = makeTab('about:home');
+    var tab = makeTab({
+      title: 'Home',
+      url: 'homescreen.gaiamobile.org'
+    });
     tab.style.zIndex = 0;
-    tab.style.top = window.innerHeight + 30 + 'px';
+    tab.style.top = snapHeight + sbHeight - gutterHeight + 'px';
     tab.style.height = window.innerHeight + 'px';
 
     var previous = window.domTabs[0];
 
-    scheduler.mutation(function() {
-      container.insertBefore(tab, previous);
-      window.domTabs.unshift(tab);
+    showFirstTab().then(function() {
+      scheduler.mutation(function() {
+        container.insertBefore(tab, previous);
+        window.domTabs.unshift(tab);
 
-      previous.classList.remove('current');
-      previous.style.top = window.innerHeight + 30 + 'px';
-      previous.style.height = window.innerHeight - 50 + 'px';
-    }).then(function() {
-      var motions = [];
+        previous.classList.remove('current');
+        previous.style.top = snapHeight + sbHeight - gutterHeight + 'px';
+        previous.style.height = snapHeight + 'px';
+      }).then(function() {
+        var motions = [];
 
-      motions.push(scheduler.transition(function() {
-        tab.classList.add('will-open');
-      }, tab, 'animationend'));
-
-      var nexts = window.domTabs.slice(1);
-      nexts.forEach(function(next) {
         motions.push(scheduler.transition(function() {
-          next.classList.add('move-down')
-        }, next, 'animationend'));
-      });
+          tab.classList.add('will-open');
+        }, tab, 'animationend'));
 
-      Promise.all(motions).then(function() {
-        return scheduler.mutation(function() {
-          return window.placeTabs();
+        var nexts = window.domTabs.slice(1);
+        nexts.forEach(function(next) {
+          motions.push(scheduler.transition(function() {
+            next.classList.add('move-down')
+          }, next, 'animationend'));
         });
-      }).then(function() {
-        window.goHome();
-        return new Promise(function(resolve) {
-          setTimeout(resolve, 250);
+
+        Promise.all(motions).then(function() {
+          return scheduler.mutation(function() {
+            return window.placeTabs();
+          });
+        }).then(function() {
+          window.goHome();
+          return new Promise(function(resolve) {
+            setTimeout(resolve, 250);
+          });
+        }).then(function() {
+          publishTabSelected(tab);
+          opening = false;
         });
-      }).then(function() {
-        opening = false;
       });
     });
   }
@@ -179,14 +217,16 @@ window.addEventListener('DOMContentLoaded', function() {
       previousCurrent.style.top = window.innerHeight + 30 + 'px';
       previousCurrent.style.height = window.innerHeight - 50 + 'px';
 
+      tab.style.height = tab.querySelector('.frame').style.height = window.innerHeight - sbHeight + 'px';
+
       tab.style.transition = 'transform 0.2s ease-in';
       toMoveUp.forEach(function(tab) {
-        tab.style.height = acHeight + 'px';
+        tab.style.height = acHeight + previewHeight + 'px';
         tab.style.transition = 'transform 0.2s ease-in';
       });
     }).then(function() {
       var motions = [];
-      var translate = -1 * (parseInt(tab.style.top) - tabs.scrollTop - sbHeight);
+      var translate = -1 * (parseInt(tab.style.top) - tabs.scrollTop - (sbHeight - gutterHeight));
 
       motions.push(scheduler.transition(function() {
         tab.style.transform = 'translateY(' + translate + 'px)';
@@ -220,6 +260,7 @@ window.addEventListener('DOMContentLoaded', function() {
           return window.placeTabs();
         });
       }).then(function() {
+        publishTabSelected(tab);
         selecting = false;
       });
     });

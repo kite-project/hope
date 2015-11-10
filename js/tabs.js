@@ -6,7 +6,8 @@ window.addEventListener('DOMContentLoaded', function() {
     },
     {
       title: 'Square Space',
-      url: 'squarespace.com'
+      url: 'squarespace.com',
+      themeColor: '#E55525'
     },
     {
       title: 'Mash Creative',
@@ -14,11 +15,13 @@ window.addEventListener('DOMContentLoaded', function() {
     },
     {
       title: 'Vine',
-      url: 'vine.com'
+      url: 'vine.com',
+      themeColor: '#00AF84'
     },
     {
       title: 'The Verge',
-      url: 'theverge.com'
+      url: 'theverge.com',
+      themeColor: '#E14164'
     }
   ];
 
@@ -48,6 +51,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
     tab.innerHTML = `
       <div class="frame">
+        <div class="overlay"></div>
         <div class="url">
           <a class="close"><img src="assets/Close_tab.png" /></a>
           <span class="title">
@@ -63,6 +67,13 @@ window.addEventListener('DOMContentLoaded', function() {
         <div class="home-filler"></div>
       </div>
     `;
+
+    if (data.themeColor) {
+      tab.querySelector('.url').style.backgroundColor = data.themeColor;
+      tab.querySelector('.overlay').style.backgroundColor = data.themeColor;
+    } else {
+      tab.querySelector('.overlay').style.backgroundColor = '#56565A';
+    }
 
     return tab;
   }

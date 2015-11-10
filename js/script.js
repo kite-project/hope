@@ -56,9 +56,9 @@ window.addEventListener('load', function() {
         cleanUp(tab);
       }
 
-      var newHeight = container.style.height = Math.max(snapHeight * 2,
-                                        height + hbHeight +
-                                          tabs.length * (acHeight + previewHeight));
+      var newHeight = Math.max(snapHeight * 2,
+                               height + hbHeight +
+                                 tabs.length * (acHeight + previewHeight));
 
       var updateContainer = function() {
         container.style.height = newHeight + 'px';

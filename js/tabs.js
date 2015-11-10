@@ -110,7 +110,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
   var closing = false
   function close(evt) {
-    if (closing) {
+    if (closing || window.domTabs.length == 1) {
       return;
     }
     closing = true;
@@ -137,6 +137,11 @@ window.addEventListener('DOMContentLoaded', function() {
         return window.placeTabs();
       });
     }).then(function() {
+      if (window.domTabs.length === 1) {
+        select({
+          target: window.domTabs[0]
+        });
+      }
       closing = false;
     });
   }

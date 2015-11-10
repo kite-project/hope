@@ -28,6 +28,8 @@
   animation-duration:  0.2s;
   animation-timing-function: ease-in;
   animation-fill-mode: both;
+
+  -moz-user-select: none;
 }
 
 /* Prevents a reflow but screws up position:sticky, so skipping for .current */
@@ -44,11 +46,15 @@
 
   display: flex;
   flex-direction: column;
+
+  -moz-user-select: none;
 }
 
 .tab .iframe img {
   width: 100%;
   height: 100%;
+  pointer-events: none;
+  -moz-user-select: none;
 }
 
 .tab.current {

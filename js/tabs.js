@@ -85,7 +85,9 @@ window.addEventListener('DOMContentLoaded', function() {
       return;
     }
 
-    if (evt.target.classList.contains('url')) {
+    if (evt.target.classList.contains('url') ||
+        evt.target.classList.contains('iframe')) {
+
       select(evt);
       return;
     }

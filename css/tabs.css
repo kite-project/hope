@@ -10,7 +10,7 @@
 
   scroll-snap-type: mandatory;
   scroll-snap-destination: 50% 0;
-  scroll-snap-points-y: repeat(calc(100% - var(--preview-height) - var(--actionbar-height) - var(--homebar-height)));
+  scroll-snap-points-y: repeat(calc(100% - var(--homebar-height) - var(--tab-gutter-height) - var(--actionbar-height) - var(--preview-height)));
 }
 
 #tabs-background {
@@ -68,7 +68,6 @@
 
 .tab .iframe img {
   width: 100%;
-  height: 100%;
   pointer-events: none;
   -moz-user-select: none;
 }
@@ -96,7 +95,7 @@
 
 .frame .url {
   position: relative;
-  flex: 0 var(--actionbar-height);
+  height: var(--actionbar-height);
 
   padding: 0 16px;
   line-height: var(--actionbar-height);
@@ -148,7 +147,9 @@
 }
 
 .frame .iframe {
-  flex: 1;
+  height: 100%;
+
+  overflow: hidden;
   background: gray;
 }
 

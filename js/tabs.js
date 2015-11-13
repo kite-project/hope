@@ -33,7 +33,7 @@ window.addEventListener('DOMContentLoaded', function() {
   var previewHeight = parseInt(bodyStyles.getPropertyValue('--preview-height'));
   var hbHeight = parseInt(bodyStyles.getPropertyValue('--homebar-height'));
   var gutterHeight = parseInt(bodyStyles.getPropertyValue('--tab-gutter-height'));
-  var snapHeight = window.innerHeight - previewHeight - acHeight - hbHeight;
+  var snapHeight = window.innerHeight - hbHeight - acHeight - previewHeight - gutterHeight;
 
   var tabs = document.getElementById('tabs');
   var container = document.querySelector('#tabs-scrollable');
@@ -64,7 +64,6 @@ window.addEventListener('DOMContentLoaded', function() {
           <div class="iframe">
             <img src="assets/${data.url}.png" />
           </div>
-        <div class="home-filler"></div>
       </div>
     `;
 
@@ -88,6 +87,10 @@ window.addEventListener('DOMContentLoaded', function() {
 
   container.addEventListener('click', function(evt) {
     if (!window.inTabsView) {
+      return;
+    }
+
+    if (opening || closing || selecting) {
       return;
     }
 

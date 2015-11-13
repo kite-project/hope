@@ -10,7 +10,8 @@ window.addEventListener('load', function() {
   var hbHeight = parseInt(bodyStyles.getPropertyValue('--homebar-height'));
   var previewHeight = parseInt(bodyStyles.getPropertyValue('--preview-height'));
   var gutterHeight = parseInt(bodyStyles.getPropertyValue('--tab-gutter-height'));
-  var snapHeight = height - previewHeight - acHeight - hbHeight;
+  var snapHeight = height - hbHeight - acHeight - previewHeight - gutterHeight;
+  var viewportHeight = height - sbHeight - hbHeight;
 
   // Setting up the tabs
   var container = document.getElementById('tabs-scrollable');
@@ -41,29 +42,34 @@ window.addEventListener('load', function() {
         current.classList.add('in-tabs-view');
       }
       current.style.zIndex = 1;
+
       current.style.top = 0;
-      current.style.height = height * 2 - acHeight - previewHeight - hbHeight + 'px';
-      current.querySelector('.frame').style.height = height - sbHeight + 'px';
+      current.querySelector('.frame').style.height = viewportHeight + 'px';
+      current.style.height = viewportHeight + snapHeight + sbHeight + 'px';
 
       var tabs = window.domTabs.slice(1);
+      var tabHeight = Math.max(gutterHeight + acHeight + previewHeight,
+                               snapHeight / tabs.length);
+      var top = viewportHeight + sbHeight + gutterHeight;
+
       for (var i = 0; i < tabs.length; i++) {
         var tab = tabs[i];
-        var shift = i * (acHeight + previewHeight + gutterHeight) + sbHeight - hbHeight;
         tab.style.zIndex = i + 2;
-        tab.style.top = height + shift + 'px';
-        tab.style.height = Math.max(acHeight + previewHeight + gutterHeight, height - shift) + 'px';
+
+        tab.style.top = top + 'px';
+        tab.querySelector('.frame').style.height = '';
+        tab.style.height = tabHeight + 'px';
+
+        top += tabHeight;
 
         cleanUp(tab);
       }
 
-      var newHeight = Math.max(snapHeight * 2,
-                               height + hbHeight +
-                                 tabs.length * (acHeight + previewHeight));
+      var newHeight = Math.max(snapHeight * 2, top + hbHeight);
 
       var updateContainer = function() {
         container.style.height = newHeight + 'px';
-        background.style.height = parseInt(container.style.height) -
-                                  snapHeight + 'px';
+        background.style.height = newHeight - snapHeight + 'px';
         resolve();
       };
 

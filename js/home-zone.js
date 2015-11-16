@@ -20,12 +20,14 @@ window.addEventListener('DOMContentLoaded', function() {
   homeZone.addEventListener('click', function(evt) {
     if (evt.target.classList.contains('add')) {
       if (window.inTabsView) {
+        evt.target.classList.toggle('tap');
         window.dispatchEvent(new CustomEvent('open-new-tab'));
       }
       return;
     }
 
     if (evt.target.classList.contains('go-home')) {
+      evt.target.classList.toggle('tap');
       window.goHome();
       return;
     }

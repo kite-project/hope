@@ -178,6 +178,7 @@ window.addEventListener('DOMContentLoaded', function() {
     tab.style.zIndex = 0;
     tab.style.top = snapHeight + sbHeight - gutterHeight + 'px';
     tab.style.height = window.innerHeight + 'px';
+    tab.classList.add('new');
 
     var previous = window.domTabs[0];
 
@@ -213,6 +214,7 @@ window.addEventListener('DOMContentLoaded', function() {
             setTimeout(resolve, 250);
           });
         }).then(function() {
+          tab.classList.remove('new');
           publishTabSelected(tab);
           opening = false;
         });

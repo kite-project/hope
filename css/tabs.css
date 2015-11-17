@@ -2,6 +2,7 @@
   --preview-height: 88px;
   --tab-gutter-height: 8px;
   --elastic-function: cubic-bezier(.41,.25,.26,1.55);
+  --motion-duration: 0.3s;
 }
 
 #tabs {
@@ -26,11 +27,13 @@
   position: absolute;
   left: 0;
 
-  animation-duration: 0.3s;
+  animation-duration: var(--motion-duration);
   animation-timing-function: ease-in;
   animation-fill-mode: both;
 
   -moz-user-select: none;
+
+  background: #313030;
 }
 
 .tab .overlay {
@@ -69,6 +72,10 @@
   flex-direction: column;
 
   -moz-user-select: none;
+
+  animation-duration: var(--motion-duration);
+  animation-timing-function: ease-in;
+  animation-fill-mode: both;
 }
 
 .tab .iframe img {
@@ -168,11 +175,13 @@
   animation-name: will-open;
 }
 
-.tab.will-close {
+.tab.will-close .frame {
   animation-name: will-close;
 }
 
 .tab.move-up {
+  animation-delay: 0.2s;
+  animation-duration: 0.2s;
   animation-name: move-up;
 }
 
@@ -187,10 +196,19 @@
 
 @keyframes will-close {
   from {
-    transform: translateX(0);
+    opacity: 1;
+    transform: scale(1);
+  }
+  25% {
+    opacity: 1;
+    transform: scale(0.9);
+  }
+  50% {
+    transform: scale(1);
   }
   to {
-    transform: translateX(100%);
+    opacity: 0;
+    transform: scale(1);
   }
 }
 

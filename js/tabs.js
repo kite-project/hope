@@ -61,9 +61,9 @@ window.addEventListener('DOMContentLoaded', function() {
             ${data.url}
           </span>
         </div>
-          <div class="iframe">
-            <img src="assets/${data.url}.png" />
-          </div>
+        <div class="iframe">
+          <img src="assets/${data.url}.png" />
+        </div>
       </div>
     `;
 
@@ -130,7 +130,7 @@ window.addEventListener('DOMContentLoaded', function() {
     nexts.forEach(function(next) {
       motions.push(scheduler.transition(function(next) {
         next.classList.add('move-up')
-      }.bind(null, next), next, 'animationend'));
+      }.bind(null, next), next, 'animationend', 1000 /* got a delay */));
     });
 
     Promise.all(motions).then(function() {

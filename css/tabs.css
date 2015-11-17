@@ -1,6 +1,7 @@
 :root {
   --preview-height: 88px;
   --tab-gutter-height: 8px;
+  --elastic-function: cubic-bezier(.41,.25,.26,1.55);
 }
 
 #tabs {
@@ -25,7 +26,7 @@
   position: absolute;
   left: 0;
 
-  animation-duration:  0.2s;
+  animation-duration: 0.3s;
   animation-timing-function: ease-in;
   animation-fill-mode: both;
 
@@ -162,6 +163,8 @@
 }
 
 .tab.will-open {
+  transform-origin: 50% top;
+  animation-timing-function: var(--elastic-function);
   animation-name: will-open;
 }
 
@@ -174,6 +177,7 @@
 }
 
 .tab.move-down {
+  animation-timing-function: var(--elastic-function);
   animation-name: move-down;
 }
 
@@ -192,10 +196,10 @@
 
 @keyframes will-open {
   from {
-    opacity: 0;
+    transform: scale(0.5);
   }
   to {
-    opacity: 1;
+    transform: scale(1);
   }
 }
 

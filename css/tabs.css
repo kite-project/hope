@@ -194,6 +194,24 @@
   animation-name: hide-down;
 }
 
+.tab.shrink-middle .frame {
+  animation-duration: 0.2s;
+  transform-origin: 50% calc((var(--actionbar-height) + var(--preview-height)) / 2);
+  animation-name: shrink-and-bounce;
+}
+
+.tab.shrink-top .frame {
+  animation-duration: 0.2s;
+  transform-origin: 50% top;
+  animation-name: shrink-and-bounce;
+}
+
+.tab.shrink-bottom .frame {
+  animation-duration: 0.2s;
+  transform-origin: 50% bottom;
+  animation-name: shrink-and-bounce;
+}
+
 @keyframes will-close {
   from {
     opacity: 1;
@@ -245,5 +263,17 @@
   }
   to {
     transform: translateY(var(--height));
+  }
+}
+
+@keyframes shrink-and-bounce {
+  from {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.95);
+  }
+  to {
+    transform: scale(1);
   }
 }

@@ -234,19 +234,48 @@ window.addEventListener('DOMContentLoaded', function() {
     var previousCurrent = window.domTabs[0];
 
     var toMoveUp = window.domTabs.slice(0, tabIndex);
+    var nexts = window.domTabs.slice(tabIndex + 1);
 
     scheduler.mutation(function() {
       previousCurrent.classList.remove('current');
-      previousCurrent.style.top = window.innerHeight + 30 + 'px';
-      previousCurrent.style.height = window.innerHeight - 50 + 'px';
+      previousCurrent.querySelector('.frame').style.height = '';
+      previousCurrent.style.top = snapHeight + sbHeight - gutterHeight + 'px';
+      previousCurrent.style.height = snapHeight + 'px';
 
-      tab.style.height = tab.querySelector('.frame').style.height = window.innerHeight - sbHeight + 'px';
+      tab.style.height = tab.querySelector('.frame').style.height = window.innerHeight - sbHeight - gutterHeight + 'px';
 
       tab.style.transition = 'transform 0.2s ease-in';
       toMoveUp.forEach(function(tab) {
-        tab.style.height = acHeight + previewHeight + 'px';
+        tab.style.height = acHeight + previewHeight + gutterHeight + 'px';
         tab.style.transition = 'transform 0.2s ease-in';
       });
+    }).then(function() {
+      var feedbacks = [];
+      feedbacks.push(scheduler.transition(function() {
+        tab.classList.add('shrink-middle')
+      }, tab, 'animationend').then(function() {
+        tab.classList.remove('shrink-middle');
+      }));
+
+      var top = toMoveUp.length && toMoveUp[toMoveUp.length - 1];
+      if (top) {
+        feedbacks.push(scheduler.transition(function() {
+          top.classList.add('shrink-top')
+        }, top, 'animationend').then(function() {
+          top.classList.remove('shrink-top')
+        }));
+      }
+
+      var bottom = nexts.length && nexts[0];
+      if (bottom) {
+        feedbacks.push(scheduler.transition(function() {
+          bottom.classList.add('shrink-bottom')
+        }, bottom, 'animationend').then(function() {
+          bottom.classList.remove('shrink-bottom')
+        }));
+      }
+
+      return Promise.all(feedbacks);
     }).then(function() {
       var motions = [];
       var translate = -1 * (parseInt(tab.style.top) - tabs.scrollTop - (sbHeight - gutterHeight));
@@ -261,7 +290,6 @@ window.addEventListener('DOMContentLoaded', function() {
         }, prev, 'transitionend'));
       });
 
-      var nexts = window.domTabs.slice(tabIndex + 1);
       nexts.forEach(function(next) {
         motions.push(scheduler.transition(function() {
           next.classList.add('hide-down')

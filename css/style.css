@@ -9,6 +9,11 @@ html, body {
   background: #bcbcbc;
 }
 
+body.preloading * {
+  animation-duration: 0s !important;
+  transition-duration: 0s !important;
+}
+
 body {
   box-shadow: 0 0 4px 4px rgba(0, 0, 0, 0.2);
   transform: scale(0.88);

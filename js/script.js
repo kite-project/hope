@@ -1,5 +1,4 @@
 window.addEventListener('load', function() {
-
   // Geometry
   var height = window.innerHeight;
   document.body.style.setProperty('--height', height + 'px');
@@ -100,6 +99,11 @@ window.addEventListener('load', function() {
       sbTitle.textContent = evt.detail.title;
     });
   });
+
+  // done setting up everything
+  setTimeout(function() {
+    document.body.classList.remove('preloading');
+  }, 500);
 });
 
 window.addEventListener('DOMContentLoaded', function() {

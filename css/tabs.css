@@ -219,7 +219,7 @@
   }
   25% {
     opacity: 1;
-    transform: scale(0.9);
+    transform: scale(0.95);
   }
   50% {
     transform: scale(1);

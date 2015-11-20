@@ -19,33 +19,10 @@ body {
   transform: scale(0.88);
 }
 
-#statusbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-
-  flex: 0 var(--statusbar-height);
-  padding: 0 8px;
-
-  font-style: italic;
-  line-height: var(--statusbar-height);
-  color: #E7E7E7;
-  background: #333333;
-
-  z-index: 1000;
-}
-
-#statusbar img {
-  float: right;
-  margin-top: 12px;
-  margin-left: 8px;
-  height: 6px;
-}
-
 :root {
-  --statusbar-height: 30px;
-  --actionbar-height: 48px;
+  --statusbar-height: 24px;
+  --expanded-url-height: 88px;
+  --actionbar-height: 68px;
   --homebar-height: 72px;
   --scrollbar-width: 20px;
 }

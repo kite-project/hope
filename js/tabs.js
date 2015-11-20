@@ -2,7 +2,8 @@ window.addEventListener('DOMContentLoaded', function() {
   var content = [
     {
       title: 'Home',
-      url: 'homescreen.gaiamobile.org'
+      url: 'homescreen.gaiamobile.org',
+      isHome: true
     },
     {
       title: 'Square Space',
@@ -33,7 +34,11 @@ window.addEventListener('DOMContentLoaded', function() {
   var previewHeight = parseInt(bodyStyles.getPropertyValue('--preview-height'));
   var hbHeight = parseInt(bodyStyles.getPropertyValue('--homebar-height'));
   var gutterHeight = parseInt(bodyStyles.getPropertyValue('--tab-gutter-height'));
+  var expandedHeight = parseInt(bodyStyles.getPropertyValue('--expanded-url-height'));
   var snapHeight = window.innerHeight - hbHeight - acHeight - previewHeight - gutterHeight;
+
+  var url = document.getElementById('url');
+  var urlText = url.querySelector('span');
 
   var tabs = document.getElementById('tabs');
   var container = document.querySelector('#tabs-scrollable');
@@ -52,13 +57,10 @@ window.addEventListener('DOMContentLoaded', function() {
     tab.innerHTML = `
       <div class="frame">
         <div class="overlay"></div>
-        <div class="url">
+        <div class="bar">
           <a class="close"><img src="assets/Close_tab.png" /></a>
           <span class="title">
             ${data.title}
-          </span>
-          <span class="urlfield">
-            ${data.url}
           </span>
         </div>
         <div class="iframe">
@@ -68,11 +70,14 @@ window.addEventListener('DOMContentLoaded', function() {
     `;
 
     if (data.themeColor) {
-      tab.querySelector('.url').style.backgroundColor = data.themeColor;
+      tab.querySelector('.bar').style.backgroundColor = data.themeColor;
       tab.querySelector('.overlay').style.backgroundColor = data.themeColor;
     } else {
       tab.querySelector('.overlay').style.backgroundColor = '#56565A';
     }
+
+    tab.dataset.url = data.url;
+    tab.classList.toggle('is-home', !!data.isHome);
 
     return tab;
   }
@@ -80,7 +85,9 @@ window.addEventListener('DOMContentLoaded', function() {
   function publishTabSelected(tab) {
     window.dispatchEvent(new CustomEvent('selected-tab', {
       detail: {
-        title: tab.querySelector('.title').textContent
+        title: tab.querySelector('.title').textContent,
+        url: tab.dataset.url,
+        isHome: tab.classList.contains('is-home')
       }
     }));
   }
@@ -99,7 +106,7 @@ window.addEventListener('DOMContentLoaded', function() {
       return;
     }
 
-    if (evt.target.classList.contains('url') ||
+    if (evt.target.classList.contains('bar') ||
         evt.target.classList.contains('iframe')) {
 
       select(evt);
@@ -173,7 +180,8 @@ window.addEventListener('DOMContentLoaded', function() {
 
     var tab = makeTab({
       title: 'Home',
-      url: 'homescreen.gaiamobile.org'
+      url: 'homescreen.gaiamobile.org',
+      isHome: true
     });
     tab.style.zIndex = 0;
     tab.style.top = snapHeight + sbHeight - gutterHeight + 'px';
@@ -190,6 +198,9 @@ window.addEventListener('DOMContentLoaded', function() {
         previous.classList.remove('current');
         previous.style.top = snapHeight + sbHeight - gutterHeight + 'px';
         previous.style.height = snapHeight + 'px';
+
+        urlText.textContent = 'Search the web';
+        url.classList.add('is-home');
       }).then(function() {
         var motions = [];
 
@@ -204,6 +215,8 @@ window.addEventListener('DOMContentLoaded', function() {
           }, next, 'animationend'));
         });
 
+        publishTabSelected(tab);
+
         Promise.all(motions).then(function() {
           return scheduler.mutation(function() {
             return window.placeTabs();
@@ -215,7 +228,6 @@ window.addEventListener('DOMContentLoaded', function() {
           });
         }).then(function() {
           tab.classList.remove('new');
-          publishTabSelected(tab);
           opening = false;
         });
       });
@@ -249,6 +261,14 @@ window.addEventListener('DOMContentLoaded', function() {
         tab.style.height = acHeight + previewHeight + gutterHeight + 'px';
         tab.style.transition = 'transform 0.2s ease-in';
       });
+
+      if (tab.classList.contains('is-home')) {
+        urlText.textContent = 'Search the web';
+        url.classList.add('is-home');
+      } else {
+        urlText.textContent = tab.dataset.url;
+        url.classList.remove('is-home');
+      }
     }).then(function() {
       var feedbacks = [];
       feedbacks.push(scheduler.transition(function() {
@@ -278,7 +298,7 @@ window.addEventListener('DOMContentLoaded', function() {
       return Promise.all(feedbacks);
     }).then(function() {
       var motions = [];
-      var translate = -1 * (parseInt(tab.style.top) - tabs.scrollTop - (sbHeight - gutterHeight));
+      var translate = -1 * (parseInt(tab.style.top) - tabs.scrollTop - (expandedHeight - acHeight - gutterHeight));
 
       motions.push(scheduler.transition(function() {
         tab.style.transform = 'translateY(' + translate + 'px)';
@@ -296,24 +316,24 @@ window.addEventListener('DOMContentLoaded', function() {
         }, next, 'animationend'));
       });
 
-      return Promise.all(motions).then(function() {
-        return scheduler.mutation(function() {
-          // TODO: move
-          tab.style.removeProperty('transition');
+      publishTabSelected(tab);
+
+      return Promise.all(motions);
+    }).then(function() {
+      return scheduler.mutation(function() {
+        tab.style.removeProperty('transition');
+        tab.style.removeProperty('transform');
+        toMoveUp.forEach(function(tab) {
+        tab.style.removeProperty('transition');
           tab.style.removeProperty('transform');
-          toMoveUp.forEach(function(tab) {
-          tab.style.removeProperty('transition');
-            tab.style.removeProperty('transform');
-          });
-          window.domTabs.splice(tabIndex, 1);
-          window.domTabs.unshift(tab);
-          window.goHome(true);
-          return window.placeTabs();
         });
-      }).then(function() {
-        publishTabSelected(tab);
-        selecting = false;
+        window.domTabs.splice(tabIndex, 1);
+        window.domTabs.unshift(tab);
+        window.goHome(true);
+        return window.placeTabs();
       });
+    }).then(function() {
+      selecting = false;
     });
   }
 });

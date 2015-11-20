@@ -8,11 +8,13 @@
     <link rel="stylesheet" href="./css/notifications.css" type="text/css" media="screen" charset="utf-8" />
     <link rel="stylesheet" href="./css/tabs.css" type="text/css" media="screen" charset="utf-8" />
     <link rel="stylesheet" href="./css/home-zone.css" type="text/css" media="screen" charset="utf-8" />
+    <link rel="stylesheet" href="./css/upper-chrome.css" type="text/css" media="screen" charset="utf-8" />
 
     <script src="./bower_components/dom-scheduler/lib/dom-scheduler.js" type="text/javascript"></script>
     <script src="./js/notifications.js" type="text/javascript"></script>
     <script src="./js/tabs.js" type="text/javascript"></script>
     <script src="./js/home-zone.js" type="text/javascript"></script>
+    <script src="./js/upper-chrome.js" type="text/javascript"></script>
     <script src="./js/script.js" type="text/javascript"></script>
   </head>
   <body class="preloading">
@@ -26,9 +28,17 @@
     </div>
     <div id="tabs-layer" class="container no-scrollbar">
       <div id="statusbar">
-        <span>Home</span>
         <img src="assets/Battery.png" />
         <img src="assets/Signal.png" />
+      </div>
+      <div id="url" class="expand is-home">
+        <div class="field">
+          <img class="reader" src="assets/urlbar_reader_mode_icon.png" />
+          <img class="refresh" src="assets/urlbar_refresh_icon.png" />
+        </div>
+        <span>
+          Search the web
+        </span>
       </div>
       <div id="home-zone">
         <div class="info">

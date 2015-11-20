@@ -34,6 +34,7 @@ window.addEventListener('DOMContentLoaded', function() {
   });
 
   window.goHome = function(instant) {
+    window.dispatchEvent(new CustomEvent('leaving-tabs-view'));
     tabsLayer.scrollTo({
       top: height,
       behavior: instant ? 'auto' : 'smooth'

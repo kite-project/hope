@@ -91,15 +91,6 @@ window.addEventListener('load', function() {
   var current = window.domTabs[0];
   current.scrollIntoView(true);
 
-
-
-  var sbTitle = document.querySelector('#statusbar span')
-  window.addEventListener('selected-tab', function(evt) {
-    scheduler.mutation(function() {
-      sbTitle.textContent = evt.detail.title;
-    });
-  });
-
   // done setting up everything
   setTimeout(function() {
     document.body.classList.remove('preloading');
@@ -115,7 +106,7 @@ window.addEventListener('DOMContentLoaded', function() {
     var height = window.innerHeight;
 
     if ((newScrollTop > lastScrollTop) &&
-        (newScrollTop >= height / 2)) {
+        (newScrollTop >= height / 4)) {
       enterTabs();
     }
 

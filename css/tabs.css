@@ -3,6 +3,7 @@
   --tab-gutter-height: 8px;
   --elastic-function: cubic-bezier(.41,.25,.26,1.55);
   --motion-duration: 0.3s;
+  --motion-delay: 0.2s;
 }
 
 #tabs {
@@ -32,7 +33,9 @@
   animation-fill-mode: both;
 
   -moz-user-select: none;
+}
 
+.tab:not(.current) {
   background: #313030;
 }
 
@@ -98,14 +101,14 @@
 
 .tab.current .frame {
   position: sticky;
-  top: var(--statusbar-height);
+  top: calc(var(--expanded-url-height) - var(--actionbar-height));
 }
 
 .tab:not(.current) {
   scroll-snap-coordinate: 50% calc((var(--statusbar-height) - var(--tab-gutter-height)) * -1);
 }
 
-.frame .url {
+.frame .bar {
   position: relative;
   height: var(--actionbar-height);
 
@@ -117,11 +120,11 @@
   pointer-events: auto;
 }
 
-.tab:not(.current) .frame .url {
+.tab:not(.current) .frame .bar {
   border-top: var(--tab-gutter-height) #313030 solid;
 }
 
-.frame .url .title {
+.frame .bar .title {
   font-family: 'Fira Sans Medium';
   font-size: 18px;
   color: white;
@@ -130,11 +133,7 @@
   pointer-events: none;
 }
 
-.frame .url .urlfield {
-  display: none;
-}
-
-.url .close {
+.bar .close {
   position: absolute;
   top: 0;
   right: 16px;
@@ -149,11 +148,11 @@
   transition: opacity 0.2s ease-in;
 }
 
-.url .close img {
+.bar .close img {
   display: inline-block;
-  margin: calc(var(--actionbar-height) / 3) 0;
-  width: calc(var(--actionbar-height) / 3);
-  height: calc(var(--actionbar-height) / 3);
+  margin: calc(var(--actionbar-height) * 0.375) 0;
+  width: calc(var(--actionbar-height) / 4);
+  height: calc(var(--actionbar-height) / 4);
 
   pointer-events: none;
 }
@@ -180,8 +179,8 @@
 }
 
 .tab.move-up {
-  animation-delay: 0.2s;
-  animation-duration: 0.2s;
+  animation-delay: var(--motion-delay);
+  animation-duration: var(--motion-delay);
   animation-name: move-up;
 }
 
@@ -195,19 +194,19 @@
 }
 
 .tab.shrink-middle .frame {
-  animation-duration: 0.2s;
+  animation-duration: var(--motion-delay);
   transform-origin: 50% calc((var(--actionbar-height) + var(--preview-height)) / 2);
   animation-name: shrink-and-bounce;
 }
 
 .tab.shrink-top .frame {
-  animation-duration: 0.2s;
+  animation-duration: var(--motion-delay);
   transform-origin: 50% top;
   animation-name: shrink-and-bounce;
 }
 
 .tab.shrink-bottom .frame {
-  animation-duration: 0.2s;
+  animation-duration: var(--motion-delay);
   transform-origin: 50% bottom;
   animation-name: shrink-and-bounce;
 }

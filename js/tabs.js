@@ -215,8 +215,6 @@ window.addEventListener('DOMContentLoaded', function() {
           }, next, 'animationend'));
         });
 
-        publishTabSelected(tab);
-
         Promise.all(motions).then(function() {
           return scheduler.mutation(function() {
             return window.placeTabs();
@@ -228,6 +226,7 @@ window.addEventListener('DOMContentLoaded', function() {
           });
         }).then(function() {
           tab.classList.remove('new');
+          publishTabSelected(tab);
           opening = false;
         });
       });

@@ -136,9 +136,10 @@
 .bar .close {
   position: absolute;
   top: 0;
-  right: 16px;
-  width: var(--actionbar-height);
+  right: 0;
+  width: 16px;
   height: var(--actionbar-height);
+  padding: 0 16px;
 
   font-weight: bold;
   font-size: 32px;

@@ -12,7 +12,26 @@ window.addEventListener('DOMContentLoaded', function() {
     }, url, 'transitionend');
   });
 
+  window.addEventListener('entering-utility-view', function() {
+    if (!url.classList.contains('expand')) {
+      return;
+    }
+
+    scheduler.feedback(function() {
+      url.classList.remove('expand');
+    }, url, 'transitionend');
+  });
+
   window.addEventListener('leaving-tabs-view', function() {
+    if (selecting || url.classList.contains('expand')) {
+      return;
+    }
+    scheduler.feedback(function() {
+      url.classList.add('expand');
+    }, url, 'transitionend');
+  });
+
+  window.addEventListener('leaving-utility-view', function() {
     if (selecting || url.classList.contains('expand')) {
       return;
     }

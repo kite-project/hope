@@ -134,3 +134,43 @@ window.addEventListener('DOMContentLoaded', function() {
     window.dispatchEvent(new CustomEvent('leaving-tabs-view'));
   }
 });
+
+window.addEventListener('DOMContentLoaded', function() {
+  var layer = document.getElementById('tabs-layer');
+
+  var lastScrollTop;
+  scheduler.attachDirect(layer, 'scroll', function(evt) {
+    if (evt.target !== layer) return;
+
+    var newScrollTop = layer.scrollTop;
+    var height = window.innerHeight;
+
+    if ((newScrollTop > lastScrollTop) &&
+        (newScrollTop >= height / 2)) {
+      leaveUtility();
+    }
+
+    if ((newScrollTop < lastScrollTop) &&
+        (newScrollTop <= height)) {
+      enterUtility();
+    }
+
+    lastScrollTop = newScrollTop;
+  });
+
+  window.inUtilityView = false;
+
+  function enterUtility() {
+    if (window.inUtilityView) return;
+    window.inUtilityView = true;
+
+    window.dispatchEvent(new CustomEvent('entering-utility-view'));
+  }
+
+  function leaveUtility() {
+    if (!window.inUtilityView) return;
+    window.inUtilityView = false;
+
+    window.dispatchEvent(new CustomEvent('leaving-utility-view'));
+  }
+});

@@ -315,8 +315,6 @@ window.addEventListener('DOMContentLoaded', function() {
         }, next, 'animationend'));
       });
 
-      publishTabSelected(tab);
-
       return Promise.all(motions);
     }).then(function() {
       return scheduler.mutation(function() {
@@ -333,6 +331,7 @@ window.addEventListener('DOMContentLoaded', function() {
       });
     }).then(function() {
       selecting = false;
+      publishTabSelected(tab);
     });
   }
 });

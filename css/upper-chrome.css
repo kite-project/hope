@@ -103,17 +103,11 @@
 
   transition-duration: var(--motion-duration);
   transition-timing-function: ease-in;
-  transition-property: transform, opacity;
+  transition-property: opacity;
 
-  transform-origin: top left;
-  transform: scale(0.7) translate(-46px, calc(var(--statusbar-height) * -1));
   opacity: 0;
-
-  transition-delay: var(--motion-delay);
 }
 
 #url.expand span {
-  transition-delay: 0s;
   opacity: 1;
-  transform: scale(1) translate(0, 0);
 }

@@ -1,18 +1,71 @@
 #notifications {
-  margin-top: var(--statusbar-height);
   flex: 1;
   overflow-y: scroll;
 }
 
+.utility-tabs {
+  display: flex;
+  margin-top: var(--statusbar-height);
+  flex: 0 70px;
+  flex-direction: row;
+}
+
+.utility-tabs > div {
+  flex: 1;
+  margin: 0 16px;
+
+  text-align: center;
+  line-height: 70px;
+  font-size: 18px;
+  font-weight: 300;
+  font-style: italic;
+  color: #A7A7A7;
+}
+
+.utility-tabs > div.selected {
+  font-weight: 400;
+  color: #E7E7E7;
+  box-shadow: inset 0 -2px #00b9d0;
+}
+
 #notifications li {
-  padding: 5px 10px;
-  border-bottom: 1px black solid;
+  position: relative;
+  padding: 0px 16px;
+  height: 72px;
+  color: white;
 }
 
-#notifications li:last-child {
-  border-bottom: 0;
+#notifications li img {
+  float: left;
+  display: block;
+  margin: 16px 16px 16px 0;
+  width: 40px;
+  height: 40px;
 }
 
-#notifications li > * {
-  margin: 4px;
+#notifications li h3 {
+  display: inline-block;
+  margin: 16px 0 0 0;
+  color: #e7e7e7;
+  font-weight: 400;
+  font-size: 18px;
+}
+
+#notifications li p {
+  display: inline-block;
+  margin: 0;
+  color: #a7a7a7;
+  font-weight: 400;
+  font-size: 15px;
+}
+
+#notifications li span {
+  display: block;
+  position: absolute;
+  top: 19px;
+  right: 16px;
+
+  color: #a7a7a7;
+  font-weight: 400;
+  font-size: 15px;
 }

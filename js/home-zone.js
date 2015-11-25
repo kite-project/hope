@@ -42,9 +42,10 @@ window.addEventListener('DOMContentLoaded', function() {
       top: 0,
       behavior: instant ? 'auto' : 'smooth'
     });
-    setTimeout(function() {
-      window.dispatchEvent(new CustomEvent('leaving-tabs-view'));
-    }, 300);
+
+    if (!window.inTabsView && !window.inUtilityView) {
+      window.goBack();
+    }
   };
 });
 

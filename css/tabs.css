@@ -87,6 +87,13 @@
   -moz-user-select: none;
 }
 
+.tab .iframe .history img {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+}
+
 .tab.current {
   overflow: visible;
 }
@@ -159,6 +166,7 @@
 }
 
 .frame .iframe {
+  position: relative;
   height: 100%;
 
   overflow: hidden;
@@ -276,4 +284,37 @@
   to {
     transform: scale(1);
   }
+}
+
+.history {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: calc(100% + var(--scrollbar-width));
+
+  overflow-y: hidden;
+  overflow-x: scroll;
+
+  scroll-snap-type: mandatory;
+  scroll-snap-destination: 0 50%;
+  scroll-snap-points-x: repeat(100%);
+
+  pointer-events: none;
+}
+
+.history .grippy {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  right: calc(50% - 25px);
+  width: 50px;
+}
+
+.history-scrollable {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 100%;
 }

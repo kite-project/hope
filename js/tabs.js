@@ -28,6 +28,12 @@ window.addEventListener('DOMContentLoaded', function() {
 
   window.domTabs = [];
 
+  window.setTabHeader = function(tab, title, color) {
+    tab.querySelector('.title').textContent = title;
+    tab.querySelector('.bar').style.backgroundColor = color;
+    tab.querySelector('.overlay').style.backgroundColor = color;
+  };
+
   var bodyStyles = window.getComputedStyle(document.body);
   var sbHeight = parseInt(bodyStyles.getPropertyValue('--statusbar-height'));
   var acHeight = parseInt(bodyStyles.getPropertyValue('--actionbar-height'));
@@ -46,6 +52,14 @@ window.addEventListener('DOMContentLoaded', function() {
     var tab = makeTab(c);
     container.appendChild(tab);
     window.domTabs.push(tab);
+    if (!tab.classList.contains('is-home')) {
+      tab.querySelector('.history').scrollLeft = window.innerWidth;
+    }
+  });
+
+  window.addEventListener('load', function loadWait() {
+    window.removeEventListener('load', loadWait);
+    publishTabSelected(window.domTabs[window.domTabs.length - 1]);
   });
 
   function makeTab(data) {
@@ -56,7 +70,6 @@ window.addEventListener('DOMContentLoaded', function() {
 
     tab.innerHTML = `
       <div class="frame">
-        <div class="overlay"></div>
         <div class="bar">
           <a class="close"><img src="assets/Close_tab.png" /></a>
           <span class="title">
@@ -64,20 +77,30 @@ window.addEventListener('DOMContentLoaded', function() {
           </span>
         </div>
         <div class="iframe">
-          <img src="assets/${data.url}.png" />
+          <img src="assets/homescreen.gaiamobile.org.png" />
+          <div class="history">
+            <div class="history-scrollable">
+              <div class="grippy"></div>
+              <img src="assets/${data.url}.png" />
+            </div>
+          </div>
+          <div class="overlay"></div>
         </div>
       </div>
     `;
 
-    if (data.themeColor) {
-      tab.querySelector('.bar').style.backgroundColor = data.themeColor;
-      tab.querySelector('.overlay').style.backgroundColor = data.themeColor;
-    } else {
-      tab.querySelector('.overlay').style.backgroundColor = '#56565A';
-    }
+    var color = data.themeColor || '#56565A';
+    window.setTabHeader(tab, data.title, color);
 
     tab.dataset.url = data.url;
-    tab.classList.toggle('is-home', !!data.isHome);
+    var history = tab.querySelector('.history');
+    history.dataset.title = data.title;
+    history.dataset.url = data.url;
+    history.dataset.color = color;
+    if (data.isHome) {
+      tab.dataset.onHome = true;
+      tab.classList.add('is-home');
+    }
 
     return tab;
   }
@@ -199,8 +222,7 @@ window.addEventListener('DOMContentLoaded', function() {
         previous.style.top = snapHeight + sbHeight - gutterHeight + 'px';
         previous.style.height = snapHeight + 'px';
 
-        urlText.textContent = 'Search the web';
-        url.classList.add('is-home');
+        window.changeURL(tab, true);
       }).then(function() {
         var motions = [];
 
@@ -261,13 +283,8 @@ window.addEventListener('DOMContentLoaded', function() {
         tab.style.transition = 'transform 0.2s ease-in';
       });
 
-      if (tab.classList.contains('is-home')) {
-        urlText.textContent = 'Search the web';
-        url.classList.add('is-home');
-      } else {
-        urlText.textContent = tab.dataset.url;
-        url.classList.remove('is-home');
-      }
+      var isHome = tab.classList.contains('is-home');
+      return window.changeURL(tab, true);
     }).then(function() {
       var feedbacks = [];
       feedbacks.push(scheduler.transition(function() {

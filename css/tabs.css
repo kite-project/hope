@@ -252,7 +252,7 @@
     transform: translateY(0);
   }
   to {
-    transform: translateY(calc((var(--actionbar-height) + var(--preview-height) + var(--tab-gutter-height)) * -1));
+    transform: translateY(calc((var(--actionbar-height) + var(--preview-height) + var(--tab-gutter-height) - 4px) * -1));
   }
 }
 

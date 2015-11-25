@@ -261,7 +261,7 @@
     transform: translateY(0);
   }
   to {
-    transform: translateY(calc(var(--actionbar-height) + var(--preview-height)));
+    transform: translateY(calc(var(--actionbar-height) + var(--preview-height) + 4px));
   }
 }
 

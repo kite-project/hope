@@ -207,51 +207,51 @@ window.addEventListener('DOMContentLoaded', function() {
       isHome: true
     });
     tab.style.zIndex = 0;
-    tab.style.top = snapHeight + sbHeight - gutterHeight + 'px';
+    tab.style.top = snapHeight + sbHeight / 2 + 'px';
     tab.style.height = window.innerHeight + 'px';
     tab.classList.add('new');
 
     var previous = window.domTabs[0];
 
     showFirstTab().then(function() {
-      scheduler.mutation(function() {
+      return scheduler.mutation(function() {
         container.insertBefore(tab, previous);
         window.domTabs.unshift(tab);
 
         previous.classList.remove('current');
-        previous.style.top = snapHeight + sbHeight - gutterHeight + 'px';
+        previous.style.top = snapHeight + sbHeight / 2 + 'px';
         previous.style.height = snapHeight + 'px';
 
         window.changeURL(tab, true);
-      }).then(function() {
-        var motions = [];
-
-        motions.push(scheduler.transition(function() {
-          tab.classList.add('will-open');
-        }, tab, 'animationend'));
-
-        var nexts = window.domTabs.slice(1);
-        nexts.forEach(function(next) {
-          motions.push(scheduler.transition(function() {
-            next.classList.add('move-down')
-          }, next, 'animationend'));
-        });
-
-        Promise.all(motions).then(function() {
-          return scheduler.mutation(function() {
-            return window.placeTabs();
-          });
-        }).then(function() {
-          window.goHome();
-          return new Promise(function(resolve) {
-            setTimeout(resolve, 250);
-          });
-        }).then(function() {
-          tab.classList.remove('new');
-          publishTabSelected(tab);
-          opening = false;
-        });
       });
+    }).then(function() {
+      var motions = [];
+
+      motions.push(scheduler.transition(function() {
+        tab.classList.add('will-open');
+      }, tab, 'animationend'));
+
+      var nexts = window.domTabs.slice(1);
+      nexts.forEach(function(next) {
+        motions.push(scheduler.transition(function() {
+          next.classList.add('move-down')
+        }, next, 'animationend'));
+      });
+
+      return Promise.all(motions);
+    }).then(function() {
+      return scheduler.mutation(function() {
+        return window.placeTabs();
+      });
+    }).then(function() {
+      window.goHome();
+      return new Promise(function(resolve) {
+        setTimeout(resolve, 250);
+      });
+    }).then(function() {
+      tab.classList.remove('new');
+      publishTabSelected(tab);
+      opening = false;
     });
   }
 

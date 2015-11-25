@@ -117,12 +117,12 @@
 }
 
 #url.change.expand .field img {
-  transition-delay: 0;
+  transition-delay: 0s;
   transition-duration: 0.15s;
   opacity: 0;
 }
 #url.change.expand span {
-  transition-delay: 0;
+  transition-delay: 0s;
   transition-duration: 0.15s;
   opacity: 0;
 }

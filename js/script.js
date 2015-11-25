@@ -59,7 +59,7 @@ window.addEventListener('load', function() {
         tab.querySelector('.frame').style.height = '';
         tab.style.height = tabHeight + 'px';
 
-        top += tabHeight;
+        top += tabHeight - 4;
 
         cleanUp(tab);
       }

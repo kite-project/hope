@@ -83,7 +83,7 @@
 
 .tab .iframe img {
   width: 100%;
-  pointer-events: none;
+  pointer-events: auto;
   -moz-user-select: none;
 }
 

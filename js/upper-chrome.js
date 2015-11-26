@@ -2,6 +2,15 @@ window.addEventListener('DOMContentLoaded', function() {
   var url = document.getElementById('url');
   var urlText = url.querySelector('span');
 
+  var bodyStyles = window.getComputedStyle(document.body);
+  var acHeight = parseInt(bodyStyles.getPropertyValue('--actionbar-height'));
+  var previewHeight = parseInt(bodyStyles.getPropertyValue('--preview-height'));
+  var hbHeight = parseInt(bodyStyles.getPropertyValue('--homebar-height'));
+  var sbHeight = parseInt(bodyStyles.getPropertyValue('--statusbar-height'));
+  var expandedHeight = parseInt(bodyStyles.getPropertyValue('--expanded-url-height'));
+  var gutterHeight = parseInt(bodyStyles.getPropertyValue('--tab-gutter-height'));
+  var snapHeight = window.innerHeight - hbHeight - expandedHeight;
+
   window.addEventListener('entering-tabs-view', function() {
     if (!url.classList.contains('expand')) {
       return;
@@ -42,12 +51,18 @@ window.addEventListener('DOMContentLoaded', function() {
 
   var selecting = false;
   var current = null;
+  var currentHome = null;
   var currentHistoryPosition = null;
   window.addEventListener('selected-tab', function(evt) {
     selecting = true;
     if (current) {
       scheduler.detachDirect(current, 'scroll', currentScroll);
       current = null;
+    }
+
+    if (currentHome) {
+      currentHome.removeEventListener('click', fakeHomescreenHandler);
+      currentHome = null;
     }
 
     return scheduler.transition(function() {
@@ -58,8 +73,91 @@ window.addEventListener('DOMContentLoaded', function() {
       current = document.querySelector('.tab.current .history');
       scheduler.attachDirect(current, 'scroll', currentScroll);
       currentScroll();
+
+      currentHome = document.querySelector('.tab.current .iframe img');
+      currentHome.addEventListener('click', fakeHomescreenHandler);
     });
   });
+
+  var fakeHomeScreenData = [
+    [{
+       title: 'Contacts',
+       url: 'contacts.gaiamobile.org',
+       themeColor: '#00AF84'
+     }, {
+       title: 'The Verge',
+       url: 'theverge.com',
+       themeColor: '#E14164'
+     }, {
+       title: 'Team Liquid',
+       url: 'teamliquid.com',
+       themeColor: '#3F5B94'
+     }
+    ],
+    [{
+       title: 'Vine',
+       url: 'vine.com',
+       themeColor: '#00AF84'
+     }, {
+       title: 'Camera',
+       url: 'camera.gaiamobile.org',
+       themeColor: '#56565A'
+     }, {
+       title: 'New York Times',
+       url: 'nytimes.com',
+       themeColor: '#56565A'
+     }
+    ],
+    [{
+       title: 'Wired',
+       url: 'wired.com',
+       themeColor: '#56565A'
+     }, {
+       title: 'BBC News',
+       url: 'bbc.com',
+       themeColor: '#BB1919'
+     }, {
+       title: 'Huffington Post',
+       url: 'huffingtonpost.com',
+       themeColor: '#2E7061'
+     }
+    ]
+  ];
+
+  function fakeHomescreenHandler(evt) {
+    var x = evt.layerX;
+    var y = evt.layerY;
+
+    var col =  Math.floor((x * 3) / window.innerWidth);
+    var row =  Math.floor((y * 3) / snapHeight);
+
+    var fakeRow = fakeHomeScreenData[row];
+    var fakeData = fakeRow && fakeRow[col];
+    if (!fakeData) return;
+
+    fakeLoad(fakeData);
+  }
+
+  var loading = false;
+  function fakeLoad(data) {
+    if (!current) return;
+
+    if (loading) return;
+    loading = true;
+
+    current.dataset.title = data.title;
+    current.dataset.url = data.url;
+    current.dataset.color = data.themeColor;
+
+    var img = current.querySelector('img')
+    img.src = `assets/${data.url}.png`;
+    img.onload = function() {
+      window.goForward();
+      setTimeout(function() {
+        loading = false;
+      }, 300);
+    };
+  }
 
   var leftPos;
   function currentScroll() {
@@ -119,6 +217,7 @@ window.addEventListener('DOMContentLoaded', function() {
   }
 
   window.goBack = function(instant) {
+    if (loading) return;
     if (!current) return;
     if (currentHistoryPosition < 1) return;
 

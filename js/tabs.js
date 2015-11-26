@@ -130,6 +130,7 @@ window.addEventListener('DOMContentLoaded', function() {
     }
 
     if (evt.target.classList.contains('bar') ||
+        evt.target.nodeName == 'IMG' ||
         evt.target.classList.contains('iframe')) {
 
       select(evt);

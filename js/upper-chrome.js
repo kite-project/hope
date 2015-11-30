@@ -11,11 +11,14 @@ window.addEventListener('DOMContentLoaded', function() {
   var gutterHeight = parseInt(bodyStyles.getPropertyValue('--tab-gutter-height'));
   var snapHeight = window.innerHeight - hbHeight - expandedHeight;
 
+  var backButton = document.querySelector('#home-zone .back');
+
   window.addEventListener('entering-tabs-view', function() {
     if (!url.classList.contains('expand')) {
       return;
     }
 
+    backButton.classList.remove('focused');
     scheduler.feedback(function() {
       url.classList.remove('expand');
     }, url, 'transitionend');
@@ -26,6 +29,7 @@ window.addEventListener('DOMContentLoaded', function() {
       return;
     }
 
+    backButton.classList.remove('focused');
     scheduler.feedback(function() {
       url.classList.remove('expand');
     }, url, 'transitionend');
@@ -35,6 +39,8 @@ window.addEventListener('DOMContentLoaded', function() {
     if (selecting || url.classList.contains('expand')) {
       return;
     }
+
+    backButton.classList.add('focused');
     scheduler.feedback(function() {
       url.classList.add('expand');
     }, url, 'transitionend');
@@ -44,6 +50,8 @@ window.addEventListener('DOMContentLoaded', function() {
     if (selecting || url.classList.contains('expand')) {
       return;
     }
+
+    backButton.classList.add('focused');
     scheduler.feedback(function() {
       url.classList.add('expand');
     }, url, 'transitionend');
@@ -66,6 +74,7 @@ window.addEventListener('DOMContentLoaded', function() {
     }
 
     return scheduler.transition(function() {
+      backButton.classList.add('focused');
       url.classList.add('expand');
     }, url, 'transitionend').then(function() {
       selecting = false;
@@ -190,6 +199,7 @@ window.addEventListener('DOMContentLoaded', function() {
     }
 
     var mutate = function() {
+      backButton.classList.toggle('canGoBack', !onHome);
       urlText.textContent = text;
       if (onHome) {
         url.classList.add('is-home');
@@ -236,4 +246,13 @@ window.addEventListener('DOMContentLoaded', function() {
       behavior: instant ? 'auto' : 'smooth'
     });
   };
+
+  backButton.addEventListener('click', function() {
+    backButton.classList.toggle('tap');
+
+    if (window.inTabsView || window.inUtilityView) {
+      return;
+    }
+    window.goBack();
+  });
 });

@@ -48,15 +48,17 @@
 
   opacity: 0.5;
   transition: opacity 0.25s ease-in;
-  pointer-events: none;
+  pointer-events: auto;
 }
 
 .tab.current:not(.in-tabs-view) .overlay {
   opacity: 0;
+  pointer-events: none;
 }
 
 .tab.new .overlay {
   opacity: 0;
+  pointer-events: none;
 }
 
 /* Prevents a reflow but screws up position:sticky, so skipping for .current */

@@ -130,8 +130,7 @@ window.addEventListener('DOMContentLoaded', function() {
     }
 
     if (evt.target.classList.contains('bar') ||
-        evt.target.nodeName == 'IMG' ||
-        evt.target.classList.contains('iframe')) {
+        evt.target.classList.contains('overlay')) {
 
       select(evt);
       return;
@@ -223,7 +222,7 @@ window.addEventListener('DOMContentLoaded', function() {
         previous.style.top = snapHeight + sbHeight / 2 + 'px';
         previous.style.height = snapHeight + 'px';
 
-        window.changeURL(tab, true);
+        return window.changeURL(tab, true);
       });
     }).then(function() {
       var motions = [];
@@ -241,6 +240,8 @@ window.addEventListener('DOMContentLoaded', function() {
 
       return Promise.all(motions);
     }).then(function() {
+      publishTabSelected(tab);
+
       return scheduler.mutation(function() {
         return window.placeTabs();
       });
@@ -251,7 +252,6 @@ window.addEventListener('DOMContentLoaded', function() {
       });
     }).then(function() {
       tab.classList.remove('new');
-      publishTabSelected(tab);
       opening = false;
     });
   }
@@ -314,6 +314,11 @@ window.addEventListener('DOMContentLoaded', function() {
 
       return Promise.all(feedbacks);
     }).then(function() {
+      window.domTabs.splice(tabIndex, 1);
+      window.domTabs.unshift(tab);
+
+      publishTabSelected(tab);
+    }).then(function() {
       var motions = [];
       var translate = -1 * (parseInt(tab.style.top) - tabs.scrollTop - (expandedHeight - acHeight - gutterHeight));
 
@@ -342,14 +347,11 @@ window.addEventListener('DOMContentLoaded', function() {
         tab.style.removeProperty('transition');
           tab.style.removeProperty('transform');
         });
-        window.domTabs.splice(tabIndex, 1);
-        window.domTabs.unshift(tab);
         window.goHome(true);
         return window.placeTabs();
       });
     }).then(function() {
       selecting = false;
-      publishTabSelected(tab);
     });
   }
 });

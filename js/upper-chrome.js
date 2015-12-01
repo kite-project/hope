@@ -79,11 +79,11 @@ window.addEventListener('DOMContentLoaded', function() {
     }, url, 'transitionend').then(function() {
       selecting = false;
 
-      current = document.querySelector('.tab.current .history');
+      current = window.domTabs[0].querySelector('.history');
       scheduler.attachDirect(current, 'scroll', currentScroll);
       currentScroll();
 
-      currentHome = document.querySelector('.tab.current .iframe img');
+      currentHome = window.domTabs[0].querySelector('.iframe img');
       currentHome.addEventListener('click', fakeHomescreenHandler);
     });
   });
@@ -187,6 +187,7 @@ window.addEventListener('DOMContentLoaded', function() {
     }
   }
 
+  var changing = false;
   window.changeURL = function(tab, instant) {
     var history = tab.querySelector('.history');
     var onHome = tab.dataset.onHome == 'true';
@@ -194,9 +195,11 @@ window.addEventListener('DOMContentLoaded', function() {
     var text = onHome ? 'Search the web' : history.dataset.url;
 
     if (urlText.textContent == text &&
-        url.classList.contains('is-home') == onHome) {
+        url.classList.contains('is-home') == onHome && !changing) {
       return Promise.resolve();
     }
+
+    changing = true;
 
     var mutate = function() {
       backButton.classList.toggle('canGoBack', !onHome);
@@ -209,6 +212,8 @@ window.addEventListener('DOMContentLoaded', function() {
         url.classList.remove('is-home');
         window.setTabHeader(tab, history.dataset.title, history.dataset.color);
       }
+
+      changing = false;
     };
 
     if (instant) {

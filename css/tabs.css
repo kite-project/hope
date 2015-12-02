@@ -94,6 +94,8 @@
   top: 0;
   right: 0;
   width: 50%;
+
+  pointer-events: none;
 }
 
 .tab.current {

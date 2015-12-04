@@ -263,7 +263,7 @@ window.addEventListener('DOMContentLoaded', function() {
     }).then(function() {
       window.goHome();
       return new Promise(function(resolve) {
-        setTimeout(resolve, 250);
+        setTimeout(resolve, 450);
       });
     }).then(function() {
       tab.classList.remove('new');

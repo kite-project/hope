@@ -23,6 +23,21 @@ window.addEventListener('DOMContentLoaded', function() {
       title: 'The Verge',
       url: 'theverge.com',
       themeColor: '#E14164'
+    },
+    {
+       title: 'Team Liquid',
+       url: 'teamliquid.com',
+       themeColor: '#3F5B94'
+    },
+    {
+       title: 'New York Times',
+       url: 'nytimes.com',
+       themeColor: '#56565A'
+    },
+    {
+       title: 'BBC News',
+       url: 'bbc.com',
+       themeColor: '#BB1919'
     }
   ];
 

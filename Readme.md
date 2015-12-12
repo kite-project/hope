@@ -1,4 +1,10 @@
-# ♫
+# Installing on a device
+Follow the steps [steps here](https://github.com/etiennesegonzac/gaia/tree/apz-gambler) , or wait a few weeks for something better :)
+
+# Looking for the MozLando demo?
+https://github.com/etiennesegonzac/hope/tree/mozlando
+
+# ♫ Song Manifesto ♫
 
 You got to
 
@@ -19,6 +25,3 @@ while the user is still panning.
 There'll be time enough to inspect,
 
 when the [scrollend](https://bugzilla.mozilla.org/show_bug.cgi?id=1172171) comes.
-
-## If you have `position:sticky`, scroll snapping and touch events
-[click here!](http://sgz.fr/apz-gambler/)

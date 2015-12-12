@@ -1,7 +1,6 @@
 window.addEventListener('DOMContentLoaded', function() {
   var homeZone = document.getElementById('home-zone');
   var menu = homeZone.querySelector('.menu');
-  var tabsLayer = document.getElementById('tabs-layer');
   var tabs = document.getElementById('tabs');
   var height = window.innerHeight;
 
@@ -34,10 +33,6 @@ window.addEventListener('DOMContentLoaded', function() {
   });
 
   window.goHome = function(instant) {
-    tabsLayer.scrollTo({
-      top: height,
-      behavior: instant ? 'auto' : 'smooth'
-    });
     tabs.scrollTo({
       top: 0,
       behavior: instant ? 'auto' : 'smooth'

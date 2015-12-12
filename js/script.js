@@ -4,19 +4,19 @@ window.addEventListener('load', function() {
   document.body.style.setProperty('--height', height + 'px');
 
   var bodyStyles = window.getComputedStyle(document.body);
-  var sbHeight = parseInt(bodyStyles.getPropertyValue('--statusbar-height'));
   var acHeight = parseInt(bodyStyles.getPropertyValue('--actionbar-height'));
+  var grippySize = parseInt(bodyStyles.getPropertyValue('--grippy-size'));
   var hbHeight = parseInt(bodyStyles.getPropertyValue('--homebar-height'));
   var previewHeight = parseInt(bodyStyles.getPropertyValue('--preview-height'));
   var gutterHeight = parseInt(bodyStyles.getPropertyValue('--tab-gutter-height'));
   var snapHeight = height - hbHeight - acHeight - previewHeight - gutterHeight;
-  var viewportHeight = height - sbHeight - hbHeight;
+  var viewportHeight = height - hbHeight;
 
   // Setting up the tabs
   var container = document.getElementById('tabs-scrollable');
   var tabsContainer = document.getElementById('tabs');
   var grippy = container.querySelector('.grippy');
-  grippy.style.top = height - acHeight + 'px';
+  grippy.style.top = height - grippySize + 'px';
 
   var background = document.getElementById('tabs-background');
   background.style.top = snapHeight + 'px';
@@ -44,12 +44,12 @@ window.addEventListener('load', function() {
 
       current.style.top = 0;
       current.querySelector('.frame').style.height = viewportHeight + 'px';
-      current.style.height = viewportHeight + snapHeight + sbHeight + 'px';
+      current.style.height = viewportHeight + snapHeight + 'px';
 
       var tabs = window.domTabs.slice(1);
       var tabHeight = Math.max(gutterHeight + acHeight + previewHeight,
                                snapHeight / tabs.length);
-      var top = viewportHeight + sbHeight + gutterHeight;
+      var top = viewportHeight + gutterHeight;
 
       for (var i = 0; i < tabs.length; i++) {
         var tab = tabs[i];
@@ -132,45 +132,5 @@ window.addEventListener('DOMContentLoaded', function() {
     window.inTabsView = false;
 
     window.dispatchEvent(new CustomEvent('leaving-tabs-view'));
-  }
-});
-
-window.addEventListener('DOMContentLoaded', function() {
-  var layer = document.getElementById('tabs-layer');
-
-  var lastScrollTop;
-  scheduler.attachDirect(layer, 'scroll', function(evt) {
-    if (evt.target !== layer) return;
-
-    var newScrollTop = layer.scrollTop;
-    var height = window.innerHeight;
-
-    if ((newScrollTop > lastScrollTop) &&
-        (newScrollTop >= height / 2)) {
-      leaveUtility();
-    }
-
-    if ((newScrollTop < lastScrollTop) &&
-        (newScrollTop <= height)) {
-      enterUtility();
-    }
-
-    lastScrollTop = newScrollTop;
-  });
-
-  window.inUtilityView = false;
-
-  function enterUtility() {
-    if (window.inUtilityView) return;
-    window.inUtilityView = true;
-
-    window.dispatchEvent(new CustomEvent('entering-utility-view'));
-  }
-
-  function leaveUtility() {
-    if (!window.inUtilityView) return;
-    window.inUtilityView = false;
-
-    window.dispatchEvent(new CustomEvent('leaving-utility-view'));
   }
 });

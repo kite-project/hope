@@ -1,6 +1,10 @@
 html, body {
-  width: 100%;
-  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
   margin: 0;
   padding: 0;
   overflow: hidden;
@@ -20,9 +24,9 @@ body {
 }
 
 :root {
-  --statusbar-height: 24px;
-  --expanded-url-height: 88px;
-  --actionbar-height: 68px;
+  --grippy-size: 24px;
+  --expanded-url-height: 64px;
+  --actionbar-height: 64px;
   --homebar-height: 72px;
   --scrollbar-width: 20px;
 }
@@ -56,11 +60,12 @@ body {
 
 .grippy {
   position: absolute;
-  top: calc(50% - var(--statusbar-height));
-  height: calc(var(--statusbar-height) * 2);
+  height: var(--grippy-size);
   width: 100%;
 
   pointer-events: auto;
+
+  z-index: 1000;
 }
 
 .single-viewport {
@@ -110,27 +115,4 @@ body {
   to {
     opacity: 0.5;
   }
-}
-
-/* Layers */
-#bottom-layer {
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: flex;
-  flex-direction: column;
-
-  background: #303030;
-}
-
-#tabs-layer {
-  position: absolute;
-  top: 0;
-  left: 0;
-
-  scroll-snap-type: mandatory;
-  scroll-snap-destination: 0 0;
-  scroll-snap-points-y: repeat(100%);
-
-  pointer-events: none;
 }

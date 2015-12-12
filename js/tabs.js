@@ -50,7 +50,6 @@ window.addEventListener('DOMContentLoaded', function() {
   };
 
   var bodyStyles = window.getComputedStyle(document.body);
-  var sbHeight = parseInt(bodyStyles.getPropertyValue('--statusbar-height'));
   var acHeight = parseInt(bodyStyles.getPropertyValue('--actionbar-height'));
   var previewHeight = parseInt(bodyStyles.getPropertyValue('--preview-height'));
   var hbHeight = parseInt(bodyStyles.getPropertyValue('--homebar-height'));
@@ -222,7 +221,7 @@ window.addEventListener('DOMContentLoaded', function() {
       isHome: true
     });
     tab.style.zIndex = 0;
-    tab.style.top = snapHeight + sbHeight / 2 + 'px';
+    tab.style.top = snapHeight - gutterHeight + 'px';
     tab.style.height = window.innerHeight + 'px';
     tab.classList.add('new');
 
@@ -234,7 +233,7 @@ window.addEventListener('DOMContentLoaded', function() {
         window.domTabs.unshift(tab);
 
         previous.classList.remove('current');
-        previous.style.top = snapHeight + sbHeight / 2 + 'px';
+        previous.style.top = snapHeight + 'px';
         previous.style.height = snapHeight + 'px';
 
         return window.changeURL(tab, true);
@@ -288,10 +287,10 @@ window.addEventListener('DOMContentLoaded', function() {
     scheduler.mutation(function() {
       previousCurrent.classList.remove('current');
       previousCurrent.querySelector('.frame').style.height = '';
-      previousCurrent.style.top = snapHeight + sbHeight - gutterHeight + 'px';
+      previousCurrent.style.top = snapHeight - gutterHeight + 'px';
       previousCurrent.style.height = snapHeight + 'px';
 
-      tab.style.height = tab.querySelector('.frame').style.height = window.innerHeight - sbHeight - gutterHeight + 'px';
+      tab.style.height = tab.querySelector('.frame').style.height = window.innerHeight - gutterHeight + 'px';
 
       tab.style.transition = 'transform 0.2s ease-in';
       toMoveUp.forEach(function(tab) {

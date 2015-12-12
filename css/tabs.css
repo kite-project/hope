@@ -112,11 +112,11 @@
 
 .tab.current .frame {
   position: sticky;
-  top: calc(var(--expanded-url-height) - var(--actionbar-height));
+  top: 0;
 }
 
 .tab:not(.current) {
-  scroll-snap-coordinate: 50% calc((var(--statusbar-height) - var(--tab-gutter-height)) * -1);
+  scroll-snap-coordinate: 50% var(--tab-gutter-height);
 }
 
 .frame .bar {
@@ -312,7 +312,7 @@
   top: 0;
   height: 100%;
   right: calc(50% - 25px);
-  width: 50px;
+  width: var(--grippy-size);
 }
 
 .history-scrollable {

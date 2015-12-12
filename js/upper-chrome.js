@@ -6,7 +6,6 @@ window.addEventListener('DOMContentLoaded', function() {
   var acHeight = parseInt(bodyStyles.getPropertyValue('--actionbar-height'));
   var previewHeight = parseInt(bodyStyles.getPropertyValue('--preview-height'));
   var hbHeight = parseInt(bodyStyles.getPropertyValue('--homebar-height'));
-  var sbHeight = parseInt(bodyStyles.getPropertyValue('--statusbar-height'));
   var expandedHeight = parseInt(bodyStyles.getPropertyValue('--expanded-url-height'));
   var gutterHeight = parseInt(bodyStyles.getPropertyValue('--tab-gutter-height'));
   var snapHeight = window.innerHeight - hbHeight - expandedHeight;
@@ -24,29 +23,7 @@ window.addEventListener('DOMContentLoaded', function() {
     }, url, 'transitionend');
   });
 
-  window.addEventListener('entering-utility-view', function() {
-    if (!url.classList.contains('expand')) {
-      return;
-    }
-
-    backButton.classList.remove('focused');
-    scheduler.feedback(function() {
-      url.classList.remove('expand');
-    }, url, 'transitionend');
-  });
-
   window.addEventListener('leaving-tabs-view', function() {
-    if (selecting || url.classList.contains('expand')) {
-      return;
-    }
-
-    backButton.classList.add('focused');
-    scheduler.feedback(function() {
-      url.classList.add('expand');
-    }, url, 'transitionend');
-  });
-
-  window.addEventListener('leaving-utility-view', function() {
     if (selecting || url.classList.contains('expand')) {
       return;
     }

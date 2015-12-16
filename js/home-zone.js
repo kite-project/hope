@@ -1,35 +1,31 @@
 window.addEventListener('DOMContentLoaded', function() {
-  var homeZone = document.getElementById('home-zone');
-  var menu = homeZone.querySelector('.menu');
   var tabs = document.getElementById('tabs');
   var height = window.innerHeight;
+  var add = document.getElementById('add');
 
   window.addEventListener('entering-tabs-view', function() {
     scheduler.feedback(function() {
-      menu.classList.add('show-add');
-    }, menu, 'animationend');
+      add.classList.add('show');
+    }, add, 'animationend');
   });
 
   window.addEventListener('leaving-tabs-view', function() {
     scheduler.feedback(function() {
-      menu.classList.remove('show-add');
-    }, menu, 'animationend');
+      add.classList.remove('show');
+    }, add, 'animationend');
   });
 
-  homeZone.addEventListener('click', function(evt) {
-    if (evt.target.classList.contains('add')) {
-      if (window.inTabsView) {
-        evt.target.classList.toggle('tap');
-        window.dispatchEvent(new CustomEvent('open-new-tab'));
-      }
+  window.addEventListener('home', function() {
+    window.goHome();
+  });
+
+  add.addEventListener('click', function(evt) {
+    if (!window.inTabsView) {
       return;
     }
 
-    if (evt.target.classList.contains('go-home')) {
-      evt.target.classList.toggle('tap');
-      window.goHome();
-      return;
-    }
+    evt.target.classList.toggle('tap');
+    window.dispatchEvent(new CustomEvent('open-new-tab'));
   });
 
   window.goHome = function(instant) {
@@ -38,7 +34,7 @@ window.addEventListener('DOMContentLoaded', function() {
       behavior: instant ? 'auto' : 'smooth'
     });
 
-    if (!window.inTabsView && !window.inUtilityView) {
+    if (!window.inTabsView) {
       window.goBack();
     }
   };

@@ -4,6 +4,7 @@
   left: 0;
   width: 100%;
   height: var(--expanded-url-height);
+  overflow: hidden;
 
   z-index: 500;
 

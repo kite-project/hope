@@ -6,11 +6,10 @@ window.addEventListener('load', function() {
   var bodyStyles = window.getComputedStyle(document.body);
   var acHeight = parseInt(bodyStyles.getPropertyValue('--actionbar-height'));
   var grippySize = parseInt(bodyStyles.getPropertyValue('--grippy-size'));
-  var hbHeight = parseInt(bodyStyles.getPropertyValue('--homebar-height'));
   var previewHeight = parseInt(bodyStyles.getPropertyValue('--preview-height'));
   var gutterHeight = parseInt(bodyStyles.getPropertyValue('--tab-gutter-height'));
-  var snapHeight = height - hbHeight - acHeight - previewHeight - gutterHeight;
-  var viewportHeight = height - hbHeight;
+  var snapHeight = height - acHeight - previewHeight - gutterHeight;
+  var viewportHeight = height;
 
   // Setting up the tabs
   var container = document.getElementById('tabs-scrollable');
@@ -49,7 +48,7 @@ window.addEventListener('load', function() {
       var tabs = window.domTabs.slice(1);
       var tabHeight = Math.max(gutterHeight + acHeight + previewHeight,
                                snapHeight / tabs.length);
-      var top = viewportHeight + gutterHeight;
+      var top = viewportHeight - gutterHeight;
 
       for (var i = 0; i < tabs.length; i++) {
         var tab = tabs[i];
@@ -64,7 +63,7 @@ window.addEventListener('load', function() {
         cleanUp(tab);
       }
 
-      var newHeight = Math.max(snapHeight * 2, top + hbHeight);
+      var newHeight = Math.max(snapHeight * 2, top);
 
       var updateContainer = function() {
         container.style.height = newHeight + 'px';
@@ -106,12 +105,12 @@ window.addEventListener('DOMContentLoaded', function() {
     var height = window.innerHeight;
 
     if ((newScrollTop > lastScrollTop) &&
-        (newScrollTop >= height / 4)) {
+        (newScrollTop >= height / 2)) {
       enterTabs();
     }
 
     if ((newScrollTop < lastScrollTop) &&
-        (newScrollTop <= height / 4)) {
+        (newScrollTop <= height / 2)) {
       leaveTabs();
     }
 

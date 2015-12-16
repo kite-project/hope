@@ -13,7 +13,7 @@
 
   scroll-snap-type: mandatory;
   scroll-snap-destination: 50% 0;
-  scroll-snap-points-y: repeat(calc(var(--height) - var(--homebar-height) - var(--tab-gutter-height) - var(--actionbar-height) - var(--preview-height)));
+  scroll-snap-points-y: repeat(calc(var(--height) - var(--tab-gutter-height) - var(--actionbar-height) - var(--preview-height)));
 }
 
 #tabs-background {
@@ -47,13 +47,13 @@
   bottom: 0;
 
   opacity: 0.5;
-  transition: opacity 0.25s ease-in;
-  pointer-events: auto;
+  transition: opacity 0.25s ease-in, visibility 0.25s ease-in;
+  visibility: visible;
 }
 
 .tab.current:not(.in-tabs-view) .overlay {
   opacity: 0;
-  pointer-events: none;
+  visibility: hidden;
 }
 
 .tab.new .overlay {
@@ -321,4 +321,64 @@
   left: 0;
   width: 200%;
   height: 100%;
+}
+
+
+#add {
+  display: block;
+  position: fixed;
+  left: 0;
+  bottom: 64px;
+  width: 48px;
+  height: 48px;
+  padding: 12px;
+
+  animation-duration:  0.3s;
+  animation-timing-function: ease-in;
+  animation-fill-mode: both;
+  animation-name: hide-add;
+
+  -moz-user-select: none;
+  z-index: 100;
+}
+
+#add img {
+  padding: 12px;
+  margin: 0;
+  width: 24px;
+  height: 24px;
+  background: #333333;
+
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+#add.show {
+  animation-name: show-add;
+}
+
+@keyframes show-add {
+  from {
+    opacity: 0;
+    transform: translateY(150px) rotate(180deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotate(0deg);
+  }
+}
+
+@keyframes hide-add {
+  from {
+    opacity: 1;
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(0) rotate(90deg);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(150px) rotate(180deg);
+  }
 }

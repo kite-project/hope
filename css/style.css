@@ -27,7 +27,6 @@ body {
   --grippy-size: 24px;
   --expanded-url-height: 64px;
   --actionbar-height: 64px;
-  --homebar-height: 72px;
   --scrollbar-width: 20px;
 }
 
@@ -80,12 +79,6 @@ body {
   height: 50%;
 }
 
-.home-filler {
-  flex: 0 var(--homebar-height);
-  background: none;
-  pointer-events: none;
-}
-
 .tappable {
   animation-duration:  0.2s;
   animation-timing-function: ease-in;
@@ -95,7 +88,7 @@ body {
   animation-name: tap-odd;
 }
 
-.tappable.tap {
+.tap .tappable, .tappable.tap {
   animation-name: tap-even;
 }
 

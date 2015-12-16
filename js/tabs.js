@@ -52,10 +52,9 @@ window.addEventListener('DOMContentLoaded', function() {
   var bodyStyles = window.getComputedStyle(document.body);
   var acHeight = parseInt(bodyStyles.getPropertyValue('--actionbar-height'));
   var previewHeight = parseInt(bodyStyles.getPropertyValue('--preview-height'));
-  var hbHeight = parseInt(bodyStyles.getPropertyValue('--homebar-height'));
   var gutterHeight = parseInt(bodyStyles.getPropertyValue('--tab-gutter-height'));
   var expandedHeight = parseInt(bodyStyles.getPropertyValue('--expanded-url-height'));
-  var snapHeight = window.innerHeight - hbHeight - acHeight - previewHeight - gutterHeight;
+  var snapHeight = window.innerHeight - acHeight - previewHeight - gutterHeight;
 
   var url = document.getElementById('url');
   var urlText = url.querySelector('span');
@@ -288,9 +287,8 @@ window.addEventListener('DOMContentLoaded', function() {
       previousCurrent.classList.remove('current');
       previousCurrent.querySelector('.frame').style.height = '';
       previousCurrent.style.top = snapHeight - gutterHeight + 'px';
-      previousCurrent.style.height = snapHeight + 'px';
 
-      tab.style.height = tab.querySelector('.frame').style.height = window.innerHeight - gutterHeight + 'px';
+      tab.style.height = tab.querySelector('.frame').style.height = window.innerHeight + 'px';
 
       tab.style.transition = 'transform 0.2s ease-in';
       toMoveUp.forEach(function(tab) {

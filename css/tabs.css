@@ -13,7 +13,7 @@
 
   scroll-snap-type: mandatory;
   scroll-snap-destination: 50% 0;
-  scroll-snap-points-y: repeat(calc(var(--height) - var(--tab-gutter-height) - var(--actionbar-height) - var(--preview-height)));
+  scroll-snap-points-y: repeat(calc(100% - var(--actionbar-height) - var(--preview-height) - var(--tab-gutter-height)));
 }
 
 #tabs-background {

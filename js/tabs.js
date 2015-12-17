@@ -56,9 +56,6 @@ window.addEventListener('DOMContentLoaded', function() {
   var expandedHeight = parseInt(bodyStyles.getPropertyValue('--expanded-url-height'));
   var snapHeight = window.innerHeight - acHeight - previewHeight - gutterHeight;
 
-  var url = document.getElementById('url');
-  var urlText = url.querySelector('span');
-
   var tabs = document.getElementById('tabs');
   var container = document.querySelector('#tabs-scrollable');
   content.forEach(function(c, i) {
@@ -83,6 +80,15 @@ window.addEventListener('DOMContentLoaded', function() {
 
     tab.innerHTML = `
       <div class="frame">
+        <div class="url">
+          <div class="field">
+            <img class="reader" src="assets/urlbar_reader_mode_icon.png" />
+            <img class="refresh" src="assets/urlbar_refresh_icon.png" />
+          </div>
+          <span>
+            ${data.title}
+          </span>
+        </div>
         <div class="bar">
           <a class="close"><img src="assets/Close_tab.png" /></a>
           <span class="title">

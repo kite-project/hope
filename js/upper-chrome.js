@@ -1,7 +1,4 @@
 window.addEventListener('DOMContentLoaded', function() {
-  var url = document.getElementById('url');
-  var urlText = url.querySelector('span');
-
   var bodyStyles = window.getComputedStyle(document.body);
   var acHeight = parseInt(bodyStyles.getPropertyValue('--actionbar-height'));
   var previewHeight = parseInt(bodyStyles.getPropertyValue('--preview-height'));
@@ -9,32 +6,10 @@ window.addEventListener('DOMContentLoaded', function() {
   var gutterHeight = parseInt(bodyStyles.getPropertyValue('--tab-gutter-height'));
   var snapHeight = window.innerHeight - expandedHeight;
 
-  window.addEventListener('entering-tabs-view', function() {
-    if (!url.classList.contains('expand')) {
-      return;
-    }
-
-    scheduler.feedback(function() {
-      url.classList.remove('expand');
-    }, url, 'transitionend');
-  });
-
-  window.addEventListener('leaving-tabs-view', function() {
-    if (selecting || url.classList.contains('expand')) {
-      return;
-    }
-
-    scheduler.feedback(function() {
-      url.classList.add('expand');
-    }, url, 'transitionend');
-  });
-
-  var selecting = false;
   var current = null;
   var currentHome = null;
   var currentHistoryPosition = null;
   window.addEventListener('selected-tab', function(evt) {
-    selecting = true;
     if (current) {
       scheduler.detachDirect(current, 'scroll', currentScroll);
       current = null;
@@ -45,18 +20,12 @@ window.addEventListener('DOMContentLoaded', function() {
       currentHome = null;
     }
 
-    return scheduler.transition(function() {
-      url.classList.add('expand');
-    }, url, 'transitionend').then(function() {
-      selecting = false;
+    current = window.domTabs[0].querySelector('.history');
+    scheduler.attachDirect(current, 'scroll', currentScroll);
+    currentScroll();
 
-      current = window.domTabs[0].querySelector('.history');
-      scheduler.attachDirect(current, 'scroll', currentScroll);
-      currentScroll();
-
-      currentHome = window.domTabs[0].querySelector('.iframe img');
-      currentHome.addEventListener('click', fakeHomescreenHandler);
-    });
+    currentHome = window.domTabs[0].querySelector('.iframe img');
+    currentHome.addEventListener('click', fakeHomescreenHandler);
   });
 
   var fakeHomeScreenData = [
@@ -162,6 +131,8 @@ window.addEventListener('DOMContentLoaded', function() {
   window.changeURL = function(tab, instant) {
     var history = tab.querySelector('.history');
     var onHome = tab.dataset.onHome == 'true';
+    var url = tab.querySelector('.url');
+    var urlText = url.querySelector('span');
 
     var text = onHome ? 'Search the web' : history.dataset.url;
 

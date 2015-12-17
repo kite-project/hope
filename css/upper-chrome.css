@@ -1,5 +1,5 @@
-#url {
-  position: fixed;
+.url {
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
@@ -8,42 +8,28 @@
 
   z-index: 500;
 
-  transform: translateY(-100%);
-
-  transition-duration: var(--motion-duration);
-  transition-timing-function: ease-in;
-  transition-property: transform;
-  transition-delay: var(--motion-delay);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease-in, visibility 0.25s ease-in;
 
   background: #333333;
 }
 
-#url.expand {
-  transition-delay: 0s;
-  transform: translateY(0);
+.current:not(.in-tabs-view) .url {
+  opacity: 1;
+  visibility: visible;
 }
 
-#url .field {
+.url .field {
   position: absolute;
   top: var(--tab-gutter-height);
   left: 8px;
   right: 8px;
   bottom: 8px;
   background: rgba(255, 255, 255, 0.05);
-
-  transition-duration: var(--motion-duration);
-  transition-timing-function: ease-in;
-  transition-property: opacity;
-
-  opacity: 0;
 }
 
-#url.expand .field {
-  transition-delay: var(--motion-delay);
-  opacity: 1;
-}
-
-#url .field img {
+.url .field img {
   position: absolute;
   top: 20px;
   width: 13px;
@@ -54,18 +40,18 @@
   opacity: 1;
 }
 
-#url.is-home .field img {
-  visibility: hidden;
+.url.is-home .field img {
+  opacity: 0;
 }
 
-#url .field .reader {
+.url .field .reader {
   left: 12px;
 }
-#url .field .refresh {
+.url .field .refresh {
   right: 12px;
 }
 
-#url span {
+.url span {
   display: block;
   position: absolute;
   top: 6px;
@@ -86,20 +72,13 @@
   transition-timing-function: ease-in;
   transition-property: opacity;
 
-  opacity: 0;
-}
-
-#url.expand span {
   opacity: 1;
 }
 
-#url.change.expand .field img {
-  transition-delay: 0s;
-  transition-duration: 0.15s;
+.url.change .field img {
   opacity: 0;
 }
-#url.change.expand span {
-  transition-delay: 0s;
-  transition-duration: 0.15s;
+
+.url.change span {
   opacity: 0;
 }

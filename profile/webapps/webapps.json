@@ -1,0 +1,14 @@
+{
+  "system.gaiamobile.org": {
+    "origin": "app://system.gaiamobile.org",
+    "installOrigin": "app://system.gaiamobile.org",
+    "receipt": null,
+    "installTime": 1450282758108,
+    "updateTime": 1450282758108,
+    "manifestURL": "app://system.gaiamobile.org/manifest.webapp",
+    "localId": 31,
+    "appStatus": 3,
+    "manifestHash": "3f33af51469f33c25101a1cbf7c23108",
+    "packageHash": "51c0447a91dc9647b0777c8192baca2a"
+  }
+}

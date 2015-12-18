@@ -15,7 +15,7 @@ window.addEventListener('load', function() {
   var container = document.getElementById('tabs-scrollable');
   var tabsContainer = document.getElementById('tabs');
   var grippy = container.querySelector('.grippy');
-  grippy.style.top = height - grippySize - gutterHeight + 'px';
+  grippy.style.top = height - grippySize + 'px';
 
   var background = document.getElementById('tabs-background');
   background.style.top = snapHeight + 'px';

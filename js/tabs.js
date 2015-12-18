@@ -57,7 +57,11 @@ window.addEventListener('DOMContentLoaded', function() {
   var snapHeight = window.innerHeight - acHeight - previewHeight - gutterHeight;
 
   var tabs = document.getElementById('tabs');
+  tabs.style.scrollSnapPointsY = 'repeat(' + snapHeight + 'px)'
+
   var container = document.querySelector('#tabs-scrollable');
+  var grippy = container.querySelector('.grippy');
+
   content.forEach(function(c, i) {
     var tab = makeTab(c);
     container.appendChild(tab);
@@ -372,22 +376,25 @@ window.addEventListener('DOMContentLoaded', function() {
       selecting = false;
     });
   }
+
+  window.addEventListener('entering-tabs-view', function() {
+    var current = window.domTabs[0];
+    if (!current) return;
+
+    scheduler.feedback(function() {
+      grippy.style.opacity = 0;
+      current.classList.add('in-tabs-view');
+    }, current, 'transitionend');
+  });
+
+  window.addEventListener('leaving-tabs-view', function() {
+    var current = window.domTabs[0];
+    if (!current) return;
+
+    scheduler.feedback(function() {
+      grippy.style.opacity = '';
+      current.classList.remove('in-tabs-view');
+    }, current, 'transitionend');
+  });
 });
 
-window.addEventListener('entering-tabs-view', function() {
-  var current = window.domTabs[0];
-  if (!current) return;
-
-  scheduler.feedback(function() {
-    current.classList.add('in-tabs-view');
-  }, current, 'transitionend');
-});
-
-window.addEventListener('leaving-tabs-view', function() {
-  var current = window.domTabs[0];
-  if (!current) return;
-
-  scheduler.feedback(function() {
-    current.classList.remove('in-tabs-view');
-  }, current, 'transitionend');
-});

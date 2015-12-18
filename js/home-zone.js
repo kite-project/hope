@@ -15,8 +15,14 @@ window.addEventListener('DOMContentLoaded', function() {
     }, add, 'animationend');
   });
 
-  window.addEventListener('home', function() {
+  window.addEventListener('home-button-press', function() {
     window.goHome();
+  });
+
+  window.addEventListener('keyup', function(evt) {
+    if (evt.key && evt.key.toLowerCase().indexOf('home') !== -1) {
+      window.goHome();
+    }
   });
 
   add.addEventListener('click', function(evt) {

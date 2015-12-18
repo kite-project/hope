@@ -193,7 +193,7 @@ window.addEventListener('DOMContentLoaded', function() {
     });
   };
 
-  window.addEventListener('back', function() {
+  window.addEventListener('back-button-press', function() {
     if (window.inTabsView) {
       return;
     }

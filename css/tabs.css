@@ -13,7 +13,6 @@
 
   scroll-snap-type: mandatory;
   scroll-snap-destination: 50% 0;
-  scroll-snap-points-y: repeat(calc(100% - var(--actionbar-height) - var(--preview-height) - var(--tab-gutter-height)));
 }
 
 #tabs-background {
@@ -307,6 +306,15 @@
   pointer-events: none;
 }
 
+#tabs-scrollable > .grippy {
+  transition: opacity 0.15s linear;
+
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  background-size: contain;
+  background-image: url('../assets/grippy.png');
+}
+
 .history .grippy {
   position: absolute;
   top: 0;
@@ -327,10 +335,10 @@
 #add {
   display: block;
   position: fixed;
-  left: 0;
+  left: calc(50% - 44px);
   bottom: 64px;
-  width: 48px;
-  height: 48px;
+  width: 64px;
+  height: 64px;
   padding: 12px;
 
   animation-duration:  0.3s;
@@ -343,13 +351,9 @@
 }
 
 #add img {
-  padding: 12px;
-  margin: 0;
-  width: 24px;
-  height: 24px;
-  background: #333333;
+  width: 64px;
+  height: 64px;
 
-  border-radius: 50%;
   pointer-events: none;
 }
 

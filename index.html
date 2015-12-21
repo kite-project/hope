@@ -1,28 +1,74 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>APZ Gambler</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <link rel="stylesheet" href="./lib/browser/style.css" type="text/css" media="screen" charset="utf-8" />
-    <link rel="stylesheet" href="./lib/browser/tabs.css" type="text/css" media="screen" charset="utf-8" />
-    <link rel="stylesheet" href="./lib/tab/chrome.css" type="text/css" media="screen" charset="utf-8" />
+<head>
+  <title>Hope</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <link rel="stylesheet" href="node_modules/fxos-icons/fxos-icons.css">
+  <link rel="stylesheet" href="lib/app.css">
 
-    <script src="./node_modules/dom-scheduler/dom-scheduler.js" type="text/javascript"></script>
-    <script src="./lib/browser/tabs.js" type="text/javascript"></script>
-    <script src="./lib/host/home-bar.js" type="text/javascript"></script>
-    <script src="./lib/tab/chrome.js" type="text/javascript"></script>
-    <script src="./lib/browser/script.js" type="text/javascript"></script>
-  </head>
-  <body class="preloading">
-    <div id="tabs" class="no-scrollbar single-viewport">
-      <div id="tabs-scrollable" class="scrollable double-viewport">
-        <div class="grippy"></div>
-        <div id="tabs-background"></div>
-      </div>
-    </div>
-    <a id="add">
-      <img src="assets/Add.png" class="tappable" />
-    </a>
-  </body>
+  <script src="node_modules/dom-scheduler/dom-scheduler.js"></script>
+  <script src="node_modules/fxos-component/fxos-component.js"></script>
+  <script src="lib/hope-tab.js"></script>
+  <script src="lib/hope-tab-list.js"></script>
+  <script defer src="lib/app.js"></script>
+</head>
+<body>
+  <hope-tab-list>
+    <li>
+      <hope-tab
+        title="Home"
+        url="homescreen.gaiamobile.org">
+      </hope-tab>
+    </li>
+    <li>
+      <hope-tab
+        title="Square Space"
+        url="squarespace.com"
+        theme-color="#E55525">
+      </hope-tab>
+    </li>
+    <li>
+      <hope-tab
+        title="Mash Creative"
+        url="mashcreative.com">
+      </hope-tab>
+    </li>
+    <li>
+      <hope-tab
+        title="Vine"
+        url="vine.com"
+        theme-color="#00AF84">
+      </hope-tab>
+    </li>
+    <li>
+      <hope-tab
+        title="The Verge"
+        url="theverge.com"
+        theme-color="#E14164">
+      </hope-tab>
+    </li>
+    <li>
+      <hope-tab
+        title="Team Liquid"
+        url="teamliquid.com"
+        theme-color="#3F5B94">
+      </hope-tab>
+    </li>
+    <li>
+      <hope-tab
+        title="New York Times"
+        url="nytimes.com"
+        theme-color="#56565A">
+      </hope-tab>
+    </li>
+    <li>
+      <hope-tab
+        title="BBC News"
+        url="bbc.com"
+        theme-color="#BB1919">
+      </hope-tab>
+    </li>
+  </hope-tab-list>
+</body>
 </html>

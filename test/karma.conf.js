@@ -14,7 +14,9 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       'node_modules/dom-scheduler/dom-scheduler.js',
-      'lib/**/*.js',
+      'node_modules/fxos-component/fxos-component.js',
+      'lib/hope-tab.js',
+      'lib/hope-tab-list.js',
       'test/**/*-test.js'
     ],
 

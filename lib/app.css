@@ -1,0 +1,22 @@
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: #bcbcbc;
+}
+
+:root {
+  --grippy-size: 44px;
+  --expanded-url-height: 64px;
+  --actionbar-height: 64px;
+  --scrollbar-width: 20px;
+
+  --preview-height: 88px;
+  --tab-gutter-height: 8px;
+  --elastic-function: cubic-bezier(.41,.25,.26,1.55);
+  --motion-duration: 300ms;
+  --motion-delay: 200ms;
+}

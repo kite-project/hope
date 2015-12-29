@@ -1,0 +1,11 @@
+{
+  "name": "Hope",
+  "description": "A new web experience for your B2G and Android devices.",
+  "manifest_version": 2,
+  "version": "0.1.0",
+  "content_scripts": [{
+    "matches": ["app://system.gaiamobile.org/index.html"],
+    "js": ["addon.js"]
+  }],
+  "web_accessible_resources": ["assets/Home.png", "assets/Back.png", "index.html"]
+}

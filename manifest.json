@@ -7,5 +7,5 @@
     "matches": ["app://system.gaiamobile.org/index.html"],
     "js": ["addon.js"]
   }],
-  "web_accessible_resources": ["assets/Home.png", "assets/Back.png", "index.html"]
+  "web_accessible_resources": ["index.html"]
 }

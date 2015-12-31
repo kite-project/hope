@@ -1,6 +1,13 @@
 # Installing on a device
 Follow the steps [steps here](https://github.com/etiennesegonzac/gaia/tree/apz-gambler) , or wait a few weeks for something better :)
 
+# Installing the addon
+* remove the `manifest.webapp` file, otherwise the WebIDE gets confused
+* run `npm install`
+* run `make addon`
+* in the WebIDE, _Open packaged app_, select the `hope` dir
+* install and run
+
 # Looking for the MozLando demo?
 https://github.com/etiennesegonzac/hope/tree/mozlando
 

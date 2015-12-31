@@ -8,7 +8,14 @@
     '#statusbar.light { filter:none !important; }',
     '#windows .appWindow .titlebar { background: #333333 !important }',
     '#windows .appWindow.homescreen { display:none !important; animation: none !important }',
-    '#software-home-ring { outline: none; background: no-repeat center/70% url(' + browser.extension.getURL('assets/Home.png') + '); }',
+    '#software-home-ring {',
+    'outline: none;',
+    '--ring-height-width: inherit;',
+    'width: 3rem;',
+    'height: 3rem;',
+    'position: relative;',
+    'left: -3rem;',
+    '}',
     '#hope-back {',
     'position: absolute;',
     'top: 0;',
@@ -18,10 +25,6 @@
     'padding: 0;',
     'pointer-events: all;',
     'background: transparent;',
-    'background-image: url(' + browser.extension.getURL('assets/Back.png') + ');',
-    'background-repeat: no-repeat;',
-    'background-size: 23px 27px;',
-    'background-position: center center;',
     'border: none;',
     '}',
   ].join('\n'));
@@ -49,8 +52,13 @@
   // Back button support
   var buttons = document.getElementById('software-buttons');
   var back = document.createElement('button');
+  var home = document.getElementById('software-home-ring');
   back.id = 'hope-back';
+  back.dataset.icon = 'left';
+  back.setAttribute('aria-label', 'back');
   buttons.insertBefore(back, buttons.firstElementChild);
+  home.setAttribute('aria-label', 'home');
+  home.dataset.icon = 'home';
 
   back.addEventListener('click', function() {
     hopeFrame.contentWindow.postMessage('back-button-press', '*');

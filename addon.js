@@ -38,8 +38,17 @@
   hopeFrame.style.left = hopeFrame.style.right = hopeFrame.style.bottom = '0';
   hopeFrame.style.width = '100%';
   hopeFrame.style.height = 'calc(100% - var(--statusbar-height) - var(--software-home-button-height))';
-  hopeFrame.src = browser.extension.getURL('index.html');
-  document.body.appendChild(hopeFrame);
+
+  var base = new URL(browser.extension.getURL('index.html')).origin;
+
+  var req = new XMLHttpRequest();
+  req.open('GET', browser.extension.getURL('index.html'));
+  req.send();
+  req.onload = function() {
+    var content = `<base href="${base}/index.html">` + req.responseText;
+    hopeFrame.src = 'data:text/html;charset=utf-8,' + encodeURI(content);
+    document.body.appendChild(hopeFrame);
+  };
 
   // Home button support
   window.addEventListener('home', function() {
@@ -55,5 +64,4 @@
   back.addEventListener('click', function() {
     hopeFrame.contentWindow.postMessage('back-button-press', '*');
   });
-
 })();

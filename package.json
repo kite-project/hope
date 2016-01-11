@@ -4,7 +4,8 @@
   "dependencies": {
     "dom-scheduler": "^2.0.0",
     "fxos-component": "^1.0.2",
-    "fxos-icons": "^2.1.1"
+    "fxos-icons": "^2.1.1",
+    "kite-icons": "^1.0.0"
   },
   "devDependencies": {
     "chai": "^3.4.1",

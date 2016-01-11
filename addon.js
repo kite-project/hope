@@ -56,7 +56,7 @@
       border: none;
     }
 
-    #home-back::before {
+    #hope-back::before {
       font-family: kite-icons;
       content: attr(data-icon);
       display: inline-block;

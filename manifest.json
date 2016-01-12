@@ -36,6 +36,8 @@
     "apps/wired.com/image.png",
     "assets/urlbar_refresh_icon.png",
     "assets/urlbar_reader_mode_icon.png",
+    "assets/Home.png",
+    "assets/Back.png",
     "lib/app.css",
     "lib/app.js",
     "lib/hope-tab.js",

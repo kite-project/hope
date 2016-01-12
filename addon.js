@@ -3,28 +3,62 @@
   var sheet = document.createElement('style');
   sheet.setAttribute('type', 'text/css');
 
-  var styleText = document.createTextNode([
-    '#statusbar { background: #333333 !important; }',
-    '#statusbar.light { filter:none !important; }',
-    '#windows .appWindow .titlebar { background: #333333 !important }',
-    '#windows .appWindow.homescreen { display:none !important; animation: none !important }',
-    '#software-home-ring { outline: none; background: no-repeat center/70% url(' + browser.extension.getURL('assets/Home.png') + '); }',
-    '#hope-back {',
-    'position: absolute;',
-    'top: 0;',
-    'left: 1rem;',
-    'height: 5rem;',
-    'width: 7rem;',
-    'padding: 0;',
-    'pointer-events: all;',
-    'background: transparent;',
-    'background-image: url(' + browser.extension.getURL('assets/Back.png') + ');',
-    'background-repeat: no-repeat;',
-    'background-size: 23px 27px;',
-    'background-position: center center;',
-    'border: none;',
-    '}',
-  ].join('\n'));
+  var styleText = document.createTextNode(`
+    @font-face {
+      font-family: kite-icons;
+      src: url(${browser.extension.getURL('node_modules/kite-icons/kite-icons.ttf')}) format("truetype");
+      font-weight: 500;
+      font-style: normal;
+    }
+
+    #statusbar {
+      background: #333333 !important;
+    }
+
+    #statusbar.light {
+      filter:none !important;
+    }
+
+    #windows .appWindow .titlebar {
+      background: #333333 !important
+    }
+
+    #windows .appWindow.homescreen {
+      display:none !important;
+      animation: none !important
+    }
+
+    #software-home-ring {
+      width: 38px;
+      height: 38px;
+      outline: none;
+      background: #a7a7a7;
+      border-radius: 50%;
+      opacity: 0.2;
+    }
+
+    #hope-back {
+      position: absolute;
+      top: 0;
+      left: 1rem;
+      height: 5rem;
+      padding: 0;
+      pointer-events: all;
+      background: transparent;
+      border: none;
+    }
+
+    #home-back::before {
+      font-family: kite-icons;
+      content: attr(data-icon);
+      display: inline-block;
+      font-size: 30px;
+      font-weight: 500;
+      text-align: center;
+      text-rendering: optimizeLegibility;
+    }
+  /*jshint ignore:end*/
+  `);
 
   sheet.appendChild(styleText);
   document.head.appendChild(sheet);
@@ -59,6 +93,8 @@
   var buttons = document.getElementById('software-buttons');
   var back = document.createElement('button');
   back.id = 'hope-back';
+  back.dataset.icon = 'back';
+  back.setAttribute('aria-label', 'Back');
   buttons.insertBefore(back, buttons.firstElementChild);
 
   back.addEventListener('click', function() {

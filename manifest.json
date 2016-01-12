@@ -8,8 +8,8 @@
     "js": ["addon.js"]
   }],
   "web_accessible_resources": [
-    "node_modules/fxos-icons/fxos-icons.css",
-    "node_modules/fxos-icons/fonts/fxos-icons.ttf",
+    "node_modules/kite-icons/kite-icons.css",
+    "node_modules/kite-icons/kite-icons.ttf",
     "node_modules/dom-scheduler/dom-scheduler.js",
     "node_modules/fxos-component/fxos-component.js",
     "apps/homescreen/index.html",
@@ -36,8 +36,6 @@
     "apps/wired.com/image.png",
     "assets/urlbar_refresh_icon.png",
     "assets/urlbar_reader_mode_icon.png",
-    "assets/Home.png",
-    "assets/Back.png",
     "lib/app.css",
     "lib/app.js",
     "lib/hope-tab.js",

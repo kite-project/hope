@@ -1,10 +1,18 @@
 (function() {
+  /*global browser*/
+
+  // cleanup any previus kite addon assets
+  Array.from(document.querySelectorAll('.kite-addon'))
+    .forEach(el => el.remove());
+
   // CSS Override
   var sheet = document.createElement('style');
   sheet.setAttribute('type', 'text/css');
+  sheet.className = 'kite-addon';
 
-  var styleText = document.createTextNode(`
-    @font-face {
+  var styleText = document.createTextNode(
+    /* jshint ignore:start*/
+    `@font-face {
       font-family: kite-icons;
       src: url(${browser.extension.getURL('node_modules/kite-icons/kite-icons.ttf')}) format("truetype");
       font-weight: 500;
@@ -56,22 +64,23 @@
       font-weight: 500;
       text-align: center;
       text-rendering: optimizeLegibility;
-    }
-  /*jshint ignore:end*/
-  `);
+    }`
+    /*jshint ignore:end*/
+  );
 
   sheet.appendChild(styleText);
   document.head.appendChild(sheet);
 
   // Injecting the hope frame
   var hopeFrame = document.createElement('iframe');
+  hopeFrame.className = 'kite-addon';
   hopeFrame.style.border = '0';
   hopeFrame.style.zIndex = '4'; // on top of the homescreen
   hopeFrame.style.position = 'absolute';
   hopeFrame.style.top = 'var(--statusbar-height)';
   hopeFrame.style.left = hopeFrame.style.right = hopeFrame.style.bottom = '0';
   hopeFrame.style.width = '100%';
-  hopeFrame.style.height = 'calc(100% - var(--statusbar-height) - var(--software-home-button-height))';
+  hopeFrame.style.height = 'calc(100% - var(--statusbar-height) - var(--software-home-button-height))'; /*jshint ignore:line*/
 
   var base = new URL(browser.extension.getURL('index.html')).origin;
 
@@ -93,6 +102,7 @@
   var buttons = document.getElementById('software-buttons');
   var back = document.createElement('button');
   back.id = 'hope-back';
+  back.className = 'kite-addon';
   back.dataset.icon = 'back';
   back.setAttribute('aria-label', 'Back');
   buttons.insertBefore(back, buttons.firstElementChild);

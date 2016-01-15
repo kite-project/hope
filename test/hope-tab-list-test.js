@@ -3,6 +3,7 @@
 suite('hope-tab-list >>', function() {
   'use strict';
   var dom, el;
+  var initialNumberOfTabs = 7;
 
   suiteSetup(function() {
     HTMLIFrameElement.prototype.setVisible = function() {};
@@ -45,9 +46,9 @@ suite('hope-tab-list >>', function() {
         var tabs = el.querySelectorAll('li:not(.current)');
         for (var i = 0; i < tabs.length; i++) {
           var tab = tabs[i];
-          assert.equal(tab.style.height, '200px')
+          assert.equal(tab.style.height, '160px')
           assert.equal(tab.style.zIndex, i + 2);
-          assert.equal(tab.style.top, 960 + i * 196 - 8 + 'px');
+          assert.equal(tab.style.top, window.innerHeight - 8  + i * 160 + 'px');
         }
       });
     });
@@ -55,7 +56,8 @@ suite('hope-tab-list >>', function() {
     test('it sets a minimum size for the container', function() {
       return el.rendered.promise.then(() => {
         var container = el.shadowRoot.querySelector('.container');
-        assert.equal(container.style.height, '1600px');
+        var size = window.innerHeight - 8 + (initialNumberOfTabs - 1) * 160;
+        assert.equal(container.style.height, size + 'px');
       });
     });
   });
@@ -151,7 +153,7 @@ suite('hope-tab-list >>', function() {
 
       test('it adds a new tab', function() {
         var tabs = el.querySelectorAll('hope-tab');
-        assert.equal(tabs.length, 5);
+        assert.equal(tabs.length, initialNumberOfTabs + 1);
 
         var current = el.querySelector('.current').firstElementChild;
         assert.equal(current.url, 'apps/homescreen/index.html');
@@ -179,7 +181,7 @@ suite('hope-tab-list >>', function() {
 
       test('it removes the tab', function() {
         var tabs = el.querySelectorAll('hope-tab');
-        assert.equal(tabs.length, 3);
+        assert.equal(tabs.length, initialNumberOfTabs - 1);
       });
     });
 
@@ -300,7 +302,7 @@ suite('hope-tab-list >>', function() {
 
       test('a tab was added', function() {
         var tabs = el.querySelectorAll('hope-tab');
-        assert.equal(tabs.length, 5);
+        assert.equal(tabs.length, initialNumberOfTabs + 1);
 
         var current = el.querySelector('.current').firstElementChild;
         assert.equal(current.url, 'apps/homescreen/index.html');
@@ -337,7 +339,7 @@ suite('hope-tab-list >>', function() {
         assert.isTrue(el.inTabsView);
 
         var tabs = el.querySelectorAll('hope-tab');
-        assert.equal(tabs.length, 3);
+        assert.equal(tabs.length, initialNumberOfTabs - 1);
       });
     });
   });
@@ -345,6 +347,15 @@ suite('hope-tab-list >>', function() {
 
   function createTabList() {
     var html = '<hope-tab-list>'
+    +   '<li>'
+    +     '<hope-tab url="about:blank"></hope-tab>'
+    +   '</li>'
+    +   '<li>'
+    +     '<hope-tab url="about:blank"></hope-tab>'
+    +   '</li>'
+    +   '<li>'
+    +     '<hope-tab url="about:blank"></hope-tab>'
+    +   '</li>'
     +   '<li>'
     +     '<hope-tab url="about:blank"></hope-tab>'
     +   '</li>'

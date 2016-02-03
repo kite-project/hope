@@ -135,6 +135,7 @@ suite('hope-tab-list >>', function() {
       setup(function() {
         var add = el.shadowRoot.querySelector('.add');
         var inner = el.shadowRoot.querySelector('.inner');
+        this.timeout(5000); // travis
 
         return new Promise((resolve) => {
           inner.addEventListener('scroll', function onScroll() {

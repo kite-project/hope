@@ -19,4 +19,6 @@ body {
   --elastic-function: cubic-bezier(.41,.25,.26,1.55);
   --motion-duration: 300ms;
   --motion-delay: 200ms;
+
+  --tab-background: #fff;
 }

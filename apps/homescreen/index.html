@@ -16,8 +16,10 @@
       margin: 4px;
     }
     hope-app-link {
-      flex: auto;
-      margin: 7px;
+      --margin-width: 7px;
+      flex: 0 0 calc(33.3% - var(--margin-width) * 2);
+      margin: var(--margin-width);
+      box-sizing: border-box;
     }
   </style>
   <script src="node_modules/fxos-component/fxos-component.js"></script>
@@ -25,23 +27,21 @@
 </head>
 <body>
   <div>
-    <hope-app-link app="contacts"></hope-app-link>
     <hope-app-link app="the-verge"></hope-app-link>
     <hope-app-link app="team-liquid"></hope-app-link>
-  </div>
-  <div>
     <hope-app-link app="vine"></hope-app-link>
-    <hope-app-link app="camera"></hope-app-link>
-    <hope-app-link app="new-york-times"></hope-app-link>
   </div>
   <div>
+    <hope-app-link app="new-york-times"></hope-app-link>
     <hope-app-link app="wired"></hope-app-link>
     <hope-app-link app="bbc-news"></hope-app-link>
-    <hope-app-link app="huffington-post"></hope-app-link>
   </div>
   <div>
+    <hope-app-link app="huffington-post"></hope-app-link>
     <hope-app-link app="marketplace"></hope-app-link>
     <hope-app-link app="kotaku"></hope-app-link>
+  </div>
+  <div>
     <hope-app-link app="squarespace"></hope-app-link>
   </div>
 </body>

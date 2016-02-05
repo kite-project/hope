@@ -1,0 +1,11 @@
+{
+  "name": "hope-homescreen",
+  "version": "0.0.1",
+  "dependencies": {
+    "fxos-component": "^1.0.2"
+  },
+  "devDependencies": {
+  },
+  "scripts": {
+  }
+}

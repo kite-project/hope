@@ -22,6 +22,7 @@
     "sinon-chai": "^2.8.0"
   },
   "scripts": {
+    "prepublish": "CWD=$(pwd); for d in apps/**/; do cd $d; npm install; cd $CWD; done;",
     "test-lint": "jshint lib/*.js",
     "test-dev": "karma start test/karma.conf",
     "test-unit": "karma start test/karma.conf --single-run",

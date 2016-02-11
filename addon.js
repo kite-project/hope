@@ -93,8 +93,22 @@
     document.body.appendChild(hopeFrame);
   };
 
+
+  // The event storage is used to lookup past events and remove them
+  // this is required as a developer may reinstall the addon several times
+  window.kiteEventStore = window.kiteEventStore || new WeakMap();
+  function addEvent(element, name, functionCall) {
+    var currentStore = window.kiteEventStore.get(element) || {};
+    if (name in currentStore) {
+      element.removeEventListener(name, currentStore[name]);
+    }
+    currentStore[name] = functionCall;
+    window.kiteEventStore.set(element, currentStore);
+    element.addEventListener(name, functionCall);
+  }
+
   // Home button support
-  window.addEventListener('home', function() {
+  addEvent(window, 'home', function() {
     hopeFrame.contentWindow.postMessage('home-button-press', '*');
   });
 

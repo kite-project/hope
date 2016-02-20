@@ -157,7 +157,7 @@ suite('hope-tab-list >>', function() {
         assert.equal(tabs.length, initialNumberOfTabs + 1);
 
         var current = el.querySelector('.current').firstElementChild;
-        assert.equal(current.url, 'apps/homescreen/index.html');
+        assert.equal(current.url, 'https://rawgit.com/kite-project/hope-home/gh-pages/index.html');
       });
     });
 
@@ -306,7 +306,7 @@ suite('hope-tab-list >>', function() {
         assert.equal(tabs.length, initialNumberOfTabs + 1);
 
         var current = el.querySelector('.current').firstElementChild;
-        assert.equal(current.url, 'apps/homescreen/index.html');
+        assert.equal(current.url, 'https://rawgit.com/kite-project/hope-home/gh-pages/index.html');
       });
     });
 

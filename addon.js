@@ -28,12 +28,12 @@
     }
 
     #windows .appWindow .titlebar {
-      background: #333333 !important
+      background: #333333 !important;
     }
 
     #windows .appWindow.homescreen {
-      display:none !important;
-      animation: none !important
+      display: none !important;
+      animation: none !important;
     }
 
     #software-home-ring {
